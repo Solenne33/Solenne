@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Solenne · Inmobiliaria en la Costa del Sol</title>
-  <meta name="description" content="Inmobiliaria boutique en la Costa del Sol. Compraventa, obra nueva y servicios integrales." />
+  <meta name="description" content="Inmobiliaria en la Costa del Sol. Compraventa, obra nueva y servicios integrales. De Manilva a Vélez-Málaga." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -1742,6 +1742,88 @@
     }
     .calc-result-cta:hover { gap: 0.7rem; }
 
+    /* Chips de extras en calculadora */
+    .calc-extras {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .calc-extra-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: 100px;
+      background: var(--bone);
+      border: 1px solid rgba(26, 24, 20, 0.1);
+      font-size: 0.78rem;
+      color: var(--graphite);
+      transition: all 0.2s;
+      cursor: pointer;
+      user-select: none;
+    }
+    .calc-extra-chip:hover { border-color: var(--clay); color: var(--clay); }
+    .calc-extra-chip.active {
+      background: var(--sea);
+      border-color: var(--sea);
+      color: var(--cream);
+    }
+    .calc-extra-chip.active::before {
+      content: '✓';
+      font-weight: 700;
+      font-size: 0.72rem;
+    }
+
+    /* Precio por m² del resultado */
+    .calc-result-per {
+      font-size: 0.84rem;
+      color: var(--stone);
+      margin-bottom: 1.2rem;
+      font-weight: 500;
+    }
+    .calc-result-per strong { color: var(--ink); font-weight: 700; }
+
+    /* Desglose visual */
+    .calc-breakdown {
+      background: var(--bone);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1rem;
+      border-left: 3px solid var(--sea);
+    }
+    .calc-breakdown-title {
+      font-size: 0.7rem;
+      color: var(--stone);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+    }
+    .calc-breakdown-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .calc-breakdown-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.84rem;
+      color: var(--graphite);
+      gap: 0.5rem;
+    }
+    .calc-breakdown-item .label { color: var(--graphite); }
+    .calc-breakdown-item .value {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      color: var(--ink);
+      font-size: 0.92rem;
+      letter-spacing: -0.01em;
+    }
+    .calc-breakdown-item .value.positive { color: var(--sea); }
+    .calc-breakdown-item .value.negative { color: var(--clay-deep); }
+    .calc-breakdown-item .value.neutral { color: var(--stone); }
+
     /* ════ HONORARIOS ════ */
     .honorarios {
       padding: 5rem 5rem;
@@ -3056,7 +3138,7 @@
     <div class="home-hero">
       <div class="home-hero-bg-arc"></div>
       <div class="home-hero-left">
-        <div class="home-eyebrow">Inmobiliaria boutique · Costa del Sol</div>
+        <div class="home-eyebrow">Costa del Sol · Tu casa, tu ritmo</div>
         <h1 class="home-title">La casa<br>que <em>buscas</em>.<br>El trato que<br><em>mereces</em>.</h1>
         <p class="home-subtitle">De Manilva a Vélez-Málaga. Compraventa, obra nueva y gestión integral para extranjeros y residentes. Sin letra pequeña, sin presión, sin tópicos.</p>
         <div class="home-cta-row">
@@ -3065,8 +3147,8 @@
         </div>
         <div class="home-stats">
           <div><div class="stat-number">10 <em>municipios</em></div><div class="stat-label">Manilva → Vélez-Málaga</div></div>
-          <div><div class="stat-number">+150 <em>propiedades</em></div><div class="stat-label">En cartera activa</div></div>
-          <div><div class="stat-number">4 <em>idiomas</em></div><div class="stat-label">ES · EN · DE · NL</div></div>
+          <div><div class="stat-number">54 <em>días</em></div><div class="stat-label">Media de venta</div></div>
+          <div><div class="stat-number">4 <em>idiomas</em></div><div class="stat-label">ES · EN · PT · RO</div></div>
         </div>
       </div>
       <div class="home-hero-right">
@@ -3326,8 +3408,8 @@
       <div class="diffs-grid" style="margin-top: 3rem;">
         <div class="diff-card"><div class="diff-num">01 /</div><h3 class="diff-title">Datos, no corazonadas</h3><p class="diff-desc">Valoraciones y comparables basados en ventas reales del Catastro y Registro. No precios "a ojo".</p></div>
         <div class="diff-card"><div class="diff-num">02 /</div><h3 class="diff-title">Marketing premium</h3><p class="diff-desc">Fotografía profesional, tours 360, vídeo con dron y retoque con IA. Tu propiedad se ve como las de las revistas.</p></div>
-        <div class="diff-card"><div class="diff-num">03 /</div><h3 class="diff-title">Multilingüe de verdad</h3><p class="diff-desc">Atendemos en español, inglés, alemán y neerlandés. El 60% de la demanda en la Costa del Sol es extranjera.</p></div>
-        <div class="diff-card"><div class="diff-num">04 /</div><h3 class="diff-title">Gestión completa</h3><p class="diff-desc">Extranjería, NIE, papeles, hipoteca, notaría, mudanza. Tú firmas, nosotros nos encargamos del resto.</p></div>
+        <div class="diff-card"><div class="diff-num">03 /</div><h3 class="diff-title">Multilingüe de verdad</h3><p class="diff-desc">Atendemos en español, inglés, portugués y rumano. El 60% de la demanda en la Costa del Sol es extranjera.</p></div>
+        <div class="diff-card"><div class="diff-num">04 /</div><h3 class="diff-title">Gestión completa</h3><p class="diff-desc">Extranjería, NIE, papeles, hipoteca, notaría. Tú firmas, nosotros nos encargamos del resto.</p></div>
       </div>
     </section>
 
@@ -3771,68 +3853,143 @@
           <div class="calc-header">
             <div class="section-eyebrow" style="margin-bottom: 0.8rem;">2 minutos · Sin registro</div>
             <h3 class="calc-title">Cuánto vale tu propiedad <em>hoy</em></h3>
-            <p class="calc-subtitle">Estimación orientativa basada en datos públicos del Catastro y comparables recientes en la zona.</p>
+            <p class="calc-subtitle">Estimación orientativa basada en precios reales del mercado y comparables de la zona. Para una valoración profesional con visita, contacta abajo.</p>
           </div>
           <div class="calc-form">
+
+            <!-- Tipo + Zona -->
             <div class="calc-row">
               <div class="calc-field">
                 <label class="calc-label">Tipo de propiedad</label>
                 <select class="calc-select" id="calcTipo">
                   <option value="">Selecciona...</option>
-                  <option value="piso" data-precio="2800">Piso / Apartamento</option>
-                  <option value="atico" data-precio="3600">Ático</option>
-                  <option value="villa" data-precio="4200">Villa</option>
-                  <option value="adosado" data-precio="2900">Adosado</option>
-                  <option value="casa" data-precio="2600">Casa de pueblo</option>
+                  <option value="piso">Piso / Apartamento</option>
+                  <option value="atico">Ático</option>
+                  <option value="villa">Villa</option>
+                  <option value="adosado">Adosado</option>
+                  <option value="casa">Casa de pueblo</option>
+                  <option value="duplex">Dúplex</option>
+                  <option value="estudio">Estudio</option>
                 </select>
               </div>
               <div class="calc-field">
-                <label class="calc-label">Zona</label>
+                <label class="calc-label">Municipio</label>
                 <select class="calc-select" id="calcZona">
                   <option value="">Selecciona...</option>
-                  <option value="manilva" data-mult="0.75">Manilva</option>
-                  <option value="estepona" data-mult="1.10">Estepona</option>
-                  <option value="marbella" data-mult="1.65">Marbella</option>
-                  <option value="mijas" data-mult="0.95">Mijas</option>
-                  <option value="fuengirola" data-mult="0.95">Fuengirola</option>
-                  <option value="benalmadena" data-mult="1.00">Benalmádena</option>
-                  <option value="torremolinos" data-mult="0.90">Torremolinos</option>
-                  <option value="malaga" data-mult="1.15">Málaga capital</option>
-                  <option value="rincon" data-mult="0.85">Rincón de la Victoria</option>
-                  <option value="velez" data-mult="0.70">Vélez-Málaga</option>
+                  <option value="manilva">Manilva</option>
+                  <option value="estepona">Estepona</option>
+                  <option value="marbella">Marbella</option>
+                  <option value="mijas">Mijas</option>
+                  <option value="fuengirola">Fuengirola</option>
+                  <option value="benalmadena">Benalmádena</option>
+                  <option value="torremolinos">Torremolinos</option>
+                  <option value="malaga">Málaga capital</option>
+                  <option value="rincon">Rincón de la Victoria</option>
+                  <option value="velez">Vélez-Málaga</option>
                 </select>
               </div>
             </div>
+
+            <!-- Sublocalidad (se rellena automáticamente) -->
+            <div class="calc-field">
+              <label class="calc-label">Localidad / Zona específica</label>
+              <select class="calc-select" id="calcSubzona" disabled>
+                <option value="">Primero elige municipio</option>
+              </select>
+            </div>
+
+            <!-- m² + año -->
             <div class="calc-row">
               <div class="calc-field">
                 <label class="calc-label">Superficie útil</label>
                 <input type="number" class="calc-input" id="calcM2" placeholder="m² (ej: 95)" min="20" max="2000">
               </div>
               <div class="calc-field">
+                <label class="calc-label">Año de construcción</label>
+                <input type="number" class="calc-input" id="calcAnio" placeholder="Ej: 2010" min="1900" max="2030">
+              </div>
+            </div>
+
+            <!-- Estado + Planta -->
+            <div class="calc-row">
+              <div class="calc-field">
                 <label class="calc-label">Estado</label>
                 <select class="calc-select" id="calcEstado">
                   <option value="">Selecciona...</option>
-                  <option value="obra-nueva" data-mult="1.20">Obra nueva</option>
-                  <option value="reformado" data-mult="1.05">Reformado</option>
+                  <option value="obra-nueva" data-mult="1.20">Obra nueva / A estrenar</option>
+                  <option value="reformado" data-mult="1.08">Reformado (últimos 10 años)</option>
                   <option value="buen-estado" data-mult="1.00">Buen estado</option>
-                  <option value="a-reformar" data-mult="0.80">A reformar</option>
+                  <option value="a-actualizar" data-mult="0.90">A actualizar</option>
+                  <option value="a-reformar" data-mult="0.75">A reformar completo</option>
+                </select>
+              </div>
+              <div class="calc-field">
+                <label class="calc-label">Planta (si aplica)</label>
+                <select class="calc-select" id="calcPlanta">
+                  <option value="" data-mult="1.00">No aplica</option>
+                  <option value="bajo" data-mult="0.93">Bajo</option>
+                  <option value="1-2" data-mult="1.00">1ª–2ª planta</option>
+                  <option value="3-5" data-mult="1.03">3ª–5ª planta</option>
+                  <option value="6+" data-mult="1.06">6ª o más alta</option>
+                  <option value="atico" data-mult="1.12">Ático / Última planta</option>
                 </select>
               </div>
             </div>
+
+            <!-- Orientación + Vistas al mar -->
+            <div class="calc-row">
+              <div class="calc-field">
+                <label class="calc-label">Orientación</label>
+                <select class="calc-select" id="calcOrientacion">
+                  <option value="" data-mult="1.00">No lo sé</option>
+                  <option value="sur" data-mult="1.05">Sur / Suroeste / Sureste</option>
+                  <option value="este-oeste" data-mult="1.00">Este u Oeste</option>
+                  <option value="norte" data-mult="0.96">Norte</option>
+                </select>
+              </div>
+              <div class="calc-field">
+                <label class="calc-label">Vistas al mar</label>
+                <select class="calc-select" id="calcVistas">
+                  <option value="ninguna" data-mult="1.00">Sin vistas</option>
+                  <option value="laterales" data-mult="1.06">Vistas laterales</option>
+                  <option value="frontales" data-mult="1.15">Vistas frontales</option>
+                  <option value="primera-linea" data-mult="1.22">Primera línea de playa</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Extras checkboxes -->
+            <div class="calc-field">
+              <label class="calc-label">Extras (suma valor)</label>
+              <div class="calc-extras">
+                <button type="button" class="calc-extra-chip" data-extra="piscina" data-mult="1.06">Piscina</button>
+                <button type="button" class="calc-extra-chip" data-extra="garaje" data-mult="1.04">Garaje</button>
+                <button type="button" class="calc-extra-chip" data-extra="terraza" data-mult="1.03">Terraza grande</button>
+                <button type="button" class="calc-extra-chip" data-extra="ascensor" data-mult="1.03">Ascensor</button>
+                <button type="button" class="calc-extra-chip" data-extra="eficiencia" data-mult="1.04">A/A · Aerotermia</button>
+              </div>
+            </div>
+
             <button class="calc-cta" id="calcBtn" disabled>
-              Ver mi estimación
+              Calcular estimación
               <span class="btn-arrow">→</span>
             </button>
           </div>
 
+          <!-- Resultado expandido -->
           <div class="calc-result" id="calcResult">
-            <div class="calc-result-label">Estimación orientativa</div>
+            <div class="calc-result-label">Rango de valor estimado</div>
             <div class="calc-result-range" id="calcResultRange"></div>
+            <div class="calc-result-per" id="calcResultPer"></div>
+
+            <!-- Desglose -->
+            <div class="calc-breakdown" id="calcBreakdown"></div>
+
             <div class="calc-result-note">
-              <strong>Esta cifra es solo un punto de partida.</strong> Para una valoración real con visita, comparables actualizados y análisis de mercado, contáctanos. Es gratis y sin compromiso.
+              <strong>Cifra orientativa.</strong> Basada en datos públicos de Catastro y precios reales del mercado de los últimos 6 meses. La valoración profesional con visita puede variar ±10-15% según estado real, calidades concretas y condiciones de mercado del momento.
             </div>
             <a href="#form-vender" class="calc-result-cta" onclick="scrollToForm()">
-              Solicitar valoración profesional gratuita
+              Solicitar valoración profesional con visita (gratis)
               <span class="btn-arrow">→</span>
             </a>
           </div>
@@ -3869,7 +4026,7 @@
               <li>Publicación en 25+ portales (incl. Idealista, Fotocasa, Kyero)</li>
               <li>Gestión de visitas y filtrado de compradores</li>
               <li>Negociación, contratos y notaría</li>
-              <li>Atención multilingüe (ES · EN · DE · NL)</li>
+              <li>Atención multilingüe (ES · EN · PT · RO)</li>
             </ul>
           </div>
           <button class="btn-primary pricing-cta" onclick="scrollToForm()">
@@ -3927,7 +4084,7 @@
             <svg viewBox="0 0 24 24"><path d="M5 9a3 3 0 016 0c0 2-3 4-3 4M5 17v.01"/><circle cx="12" cy="12" r="10"/></svg>
           </div>
           <h4>Extranjería y <em>NIE</em></h4>
-          <p>Tu comprador es alemán, británico o nórdico y no tiene NIE. Lo tramitamos. Cuenta bancaria española, representante fiscal, certificado de no residencia. Lo cubrimos todo.</p>
+          <p>Tu comprador es portugués, británico o rumano y no tiene NIE. Lo tramitamos. Cuenta bancaria española, representante fiscal, certificado de no residencia. Lo cubrimos todo.</p>
         </div>
 
         <div class="servicio-card">
@@ -3943,7 +4100,7 @@
             <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
           </div>
           <h4>Atención <em>multilingüe</em></h4>
-          <p>Tu inmueble se anuncia y se enseña en español, inglés, alemán y neerlandés. El 60% de la demanda en la Costa del Sol es extranjera: ignorarla cuesta dinero.</p>
+          <p>Tu inmueble se anuncia y se enseña en español, inglés, portugués y rumano. El 60% de la demanda en la Costa del Sol es extranjera: ignorarla cuesta dinero.</p>
         </div>
 
         <div class="servicio-card">
@@ -3951,7 +4108,7 @@
             <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
           </div>
           <h4>Marketing <em>multiplataforma</em></h4>
-          <p>Idealista Premium, Fotocasa, Habitaclia, Kyero (Reino Unido), ImmobilienScout24 (Alemania), Funda (Países Bajos), MLS local, redes sociales y campañas Meta segmentadas.</p>
+          <p>Idealista Premium, Fotocasa, Habitaclia, Kyero (Reino Unido), Idealista Portugal, OLX Romania, MLS local, redes sociales y campañas Meta segmentadas por idioma y país.</p>
         </div>
 
         <div class="servicio-card">
@@ -4024,11 +4181,11 @@
         </div>
 
         <div class="testimonio-card">
-          <p class="testimonio-quote">Vivo en Múnich y necesitaba vender el ático de mi padre. Lo gestionaron todo en alemán y en español, incluido el NIE para mí y el certificado fiscal. No pisé España hasta el día de la firma.</p>
+          <p class="testimonio-quote">Vivo en Lisboa y necesitaba vender el ático de mi madre. Lo gestionaron todo en portugués y en español, incluido el NIE para mí, el certificado fiscal y la coordinación con notaría. No pisé España hasta el día de la firma.</p>
           <div class="testimonio-meta">
-            <div class="testimonio-avatar">HK</div>
+            <div class="testimonio-avatar">JS</div>
             <div class="testimonio-info">
-              <div class="testimonio-name">Hans Krüger</div>
+              <div class="testimonio-name">João Silva</div>
               <div class="testimonio-property">Ático · Fuengirola</div>
             </div>
           </div>
@@ -4039,7 +4196,7 @@
         </div>
 
         <div class="testimonio-card">
-          <p class="testimonio-quote">Las fotos con dron y el tour 360 marcaron la diferencia. El comprador se enamoró antes de venir. Voló desde Ámsterdam un sábado, firmó arras el lunes. Ojalá hubiera empezado por aquí.</p>
+          <p class="testimonio-quote">Las fotos con dron y el tour 360 marcaron la diferencia. El comprador se enamoró antes de venir. Voló desde Bucarest un sábado, firmó arras el lunes. Ojalá hubiera empezado por aquí.</p>
           <div class="testimonio-meta">
             <div class="testimonio-avatar">JR</div>
             <div class="testimonio-info">
@@ -4123,6 +4280,10 @@
             </div>
             <div class="form-progress-step" data-step="5">
               <div class="form-progress-dot"><span class="form-progress-dot-num">5</span></div>
+              <div class="form-progress-label">Documentación</div>
+            </div>
+            <div class="form-progress-step" data-step="6">
+              <div class="form-progress-dot"><span class="form-progress-dot-num">6</span></div>
               <div class="form-progress-label">Tus datos</div>
             </div>
           </div>
@@ -4189,9 +4350,9 @@
             <!-- ═══ PASO 2: CARACTERÍSTICAS ═══ -->
             <div class="form-step" data-step="2">
               <div class="form-step-header">
-                <div class="form-step-eyebrow">Paso 2 de 5</div>
+                <div class="form-step-eyebrow">Paso 2 de 6</div>
                 <div class="form-step-title">Las <em>características</em> de tu inmueble</div>
-                <div class="form-step-subtitle">Tamaño, año y orientación. Si no recuerdas algún dato, pon una estimación o déjalo vacío.</div>
+                <div class="form-step-subtitle">Tamaño, año y características técnicas. Cuanto más preciso, mejor valoración. Si no recuerdas algún dato, pon una estimación o déjalo vacío.</div>
               </div>
 
               <div class="form-row">
@@ -4214,8 +4375,21 @@
                   <div class="form-helper">Solo si aplica (villa, adosado, casa)</div>
                 </div>
                 <div class="form-field">
+                  <label class="form-label">Superficie de terraza</label>
+                  <input type="number" class="form-input" name="m2terraza" placeholder="m² de terrazas y solárium" min="0" max="500">
+                  <div class="form-helper">Suma todas las terrazas y solárium</div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-field">
                   <label class="form-label">Año de construcción</label>
                   <input type="number" class="form-input" name="anio" placeholder="Ej: 1995" min="1800" max="2030">
+                </div>
+                <div class="form-field">
+                  <label class="form-label">Año última reforma</label>
+                  <input type="number" class="form-input" name="anioReforma" placeholder="Si se reformó (ej: 2020)" min="1900" max="2030">
+                  <div class="form-helper">Solo si se ha hecho reforma integral</div>
                 </div>
               </div>
 
@@ -4224,18 +4398,20 @@
                   <label class="form-label">Planta (solo pisos/áticos)</label>
                   <select class="form-select" name="planta">
                     <option value="">No aplica / N/D</option>
+                    <option>Sótano</option>
                     <option>Bajo</option>
                     <option>Entreplanta</option>
                     <option>Planta 1ª</option>
                     <option>Planta 2ª</option>
                     <option>Planta 3ª</option>
                     <option>Planta 4ª</option>
-                    <option>Planta 5ª o más alta</option>
+                    <option>Planta 5ª</option>
+                    <option>Planta 6ª o superior</option>
                     <option>Ático / Última planta</option>
                   </select>
                 </div>
                 <div class="form-field">
-                  <label class="form-label">Orientación</label>
+                  <label class="form-label">Orientación principal</label>
                   <select class="form-select" name="orientacion">
                     <option value="">No lo sé</option>
                     <option>Norte</option>
@@ -4249,14 +4425,57 @@
                   </select>
                 </div>
               </div>
+
+              <div class="form-row">
+                <div class="form-field">
+                  <label class="form-label">Vistas</label>
+                  <select class="form-select" name="vistas">
+                    <option value="">Selecciona...</option>
+                    <option>Sin vistas / Interior</option>
+                    <option>Despejadas / Urbanas</option>
+                    <option>A montaña</option>
+                    <option>Vistas laterales al mar</option>
+                    <option>Vistas frontales al mar</option>
+                    <option>Primera línea de playa</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label class="form-label">Certificado energético</label>
+                  <select class="form-select" name="certificado">
+                    <option value="">No lo sé / No tengo</option>
+                    <option>A</option>
+                    <option>B</option>
+                    <option>C</option>
+                    <option>D</option>
+                    <option>E</option>
+                    <option>F</option>
+                    <option>G</option>
+                    <option>Exento</option>
+                    <option>En trámite</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-field">
+                  <label class="form-label">Cuota de comunidad mensual</label>
+                  <input type="number" class="form-input" name="comunidad" placeholder="€/mes (ej: 80)" min="0" max="5000">
+                  <div class="form-helper">Solo si hay comunidad. 0 si es vivienda independiente.</div>
+                </div>
+                <div class="form-field">
+                  <label class="form-label">IBI anual</label>
+                  <input type="number" class="form-input" name="ibi" placeholder="€/año (ej: 350)" min="0" max="50000">
+                  <div class="form-helper">Lo que pagas al ayuntamiento anualmente</div>
+                </div>
+              </div>
             </div>
 
             <!-- ═══ PASO 3: DISTRIBUCIÓN Y ESTADO ═══ -->
             <div class="form-step" data-step="3">
               <div class="form-step-header">
-                <div class="form-step-eyebrow">Paso 3 de 5</div>
-                <div class="form-step-title">Distribución, <em>estado y extras</em></div>
-                <div class="form-step-subtitle">Cuántas habitaciones, en qué estado está y qué incluye.</div>
+                <div class="form-step-eyebrow">Paso 3 de 6</div>
+                <div class="form-step-title">Distribución, <em>estado e instalaciones</em></div>
+                <div class="form-step-subtitle">Cuántas habitaciones, en qué estado está, qué incluye y qué tipo de instalaciones tiene.</div>
               </div>
 
               <div class="form-field">
@@ -4272,24 +4491,45 @@
                 </div>
               </div>
 
-              <div class="form-field">
-                <label class="form-label">Baños completos <span class="required">*</span></label>
-                <div class="number-row" data-name="banios" data-required="true">
-                  <button type="button" class="number-btn" data-value="1">1</button>
-                  <button type="button" class="number-btn" data-value="2">2</button>
-                  <button type="button" class="number-btn" data-value="3">3</button>
-                  <button type="button" class="number-btn" data-value="4">4</button>
-                  <button type="button" class="number-btn" data-value="5+">5+</button>
+              <div class="form-row">
+                <div class="form-field">
+                  <label class="form-label">Baños completos <span class="required">*</span></label>
+                  <div class="number-row" data-name="banios" data-required="true">
+                    <button type="button" class="number-btn" data-value="1">1</button>
+                    <button type="button" class="number-btn" data-value="2">2</button>
+                    <button type="button" class="number-btn" data-value="3">3</button>
+                    <button type="button" class="number-btn" data-value="4">4</button>
+                    <button type="button" class="number-btn" data-value="5+">5+</button>
+                  </div>
+                </div>
+                <div class="form-field">
+                  <label class="form-label">Aseos / Lavabos</label>
+                  <div class="number-row" data-name="aseos">
+                    <button type="button" class="number-btn" data-value="0">0</button>
+                    <button type="button" class="number-btn" data-value="1">1</button>
+                    <button type="button" class="number-btn" data-value="2">2</button>
+                    <button type="button" class="number-btn" data-value="3+">3+</button>
+                  </div>
                 </div>
               </div>
 
-              <div class="form-field">
-                <label class="form-label">Aseos / Lavabos</label>
-                <div class="number-row" data-name="aseos">
-                  <button type="button" class="number-btn" data-value="0">0</button>
-                  <button type="button" class="number-btn" data-value="1">1</button>
-                  <button type="button" class="number-btn" data-value="2">2</button>
-                  <button type="button" class="number-btn" data-value="3+">3+</button>
+              <div class="form-row">
+                <div class="form-field">
+                  <label class="form-label">Plazas de garaje</label>
+                  <div class="number-row" data-name="garajes">
+                    <button type="button" class="number-btn" data-value="0">0</button>
+                    <button type="button" class="number-btn" data-value="1">1</button>
+                    <button type="button" class="number-btn" data-value="2">2</button>
+                    <button type="button" class="number-btn" data-value="3+">3+</button>
+                  </div>
+                </div>
+                <div class="form-field">
+                  <label class="form-label">Trasteros</label>
+                  <div class="number-row" data-name="trasteros">
+                    <button type="button" class="number-btn" data-value="0">0</button>
+                    <button type="button" class="number-btn" data-value="1">1</button>
+                    <button type="button" class="number-btn" data-value="2+">2+</button>
+                  </div>
                 </div>
               </div>
 
@@ -4308,32 +4548,78 @@
                     <div class="radio-card-title">Buen estado</div>
                     <div class="radio-card-desc">Habitable sin obras</div>
                   </div>
+                  <div class="radio-card" data-value="a-actualizar">
+                    <div class="radio-card-title">A actualizar</div>
+                    <div class="radio-card-desc">Necesita modernización</div>
+                  </div>
                   <div class="radio-card" data-value="a-reformar">
                     <div class="radio-card-title">A reformar</div>
-                    <div class="radio-card-desc">Necesita actualización</div>
+                    <div class="radio-card-desc">Reforma integral necesaria</div>
                   </div>
                 </div>
               </div>
 
+              <div class="form-row">
+                <div class="form-field">
+                  <label class="form-label">Sistema de calefacción</label>
+                  <select class="form-select" name="calefaccion">
+                    <option value="">No tiene / No lo sé</option>
+                    <option>Gas natural</option>
+                    <option>Gasoil</option>
+                    <option>Eléctrica</option>
+                    <option>Bomba de calor</option>
+                    <option>Aerotermia</option>
+                    <option>Suelo radiante</option>
+                    <option>Pellet / Biomasa</option>
+                    <option>Solar</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label class="form-label">Aire acondicionado</label>
+                  <select class="form-select" name="ac">
+                    <option value="">No tiene</option>
+                    <option>Split en algunas estancias</option>
+                    <option>Split en todas las estancias</option>
+                    <option>Conductos / Centralizado</option>
+                    <option>Pre-instalación</option>
+                  </select>
+                </div>
+              </div>
+
               <div class="form-field">
-                <label class="form-label">Extras (selecciona los que apliquen)</label>
+                <label class="form-label">Tipo de cocina</label>
+                <select class="form-select" name="cocina">
+                  <option value="">No especificado</option>
+                  <option>Cocina cerrada / Independiente</option>
+                  <option>Cocina semi-abierta</option>
+                  <option>Cocina americana / Open space</option>
+                  <option>Office (con zona comer)</option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label">Extras y equipamiento (selecciona todos los que apliquen)</label>
                 <div class="extras-chips" id="extrasChips">
-                  <button type="button" class="extra-chip" data-extra="piscina">Piscina</button>
-                  <button type="button" class="extra-chip" data-extra="garaje">Garaje</button>
-                  <button type="button" class="extra-chip" data-extra="trastero">Trastero</button>
+                  <button type="button" class="extra-chip" data-extra="piscina-privada">Piscina privada</button>
+                  <button type="button" class="extra-chip" data-extra="piscina-comunitaria">Piscina comunitaria</button>
+                  <button type="button" class="extra-chip" data-extra="jardin-privado">Jardín privado</button>
                   <button type="button" class="extra-chip" data-extra="terraza">Terraza</button>
                   <button type="button" class="extra-chip" data-extra="balcon">Balcón</button>
-                  <button type="button" class="extra-chip" data-extra="jardin">Jardín privado</button>
+                  <button type="button" class="extra-chip" data-extra="solarium">Solárium</button>
                   <button type="button" class="extra-chip" data-extra="ascensor">Ascensor</button>
-                  <button type="button" class="extra-chip" data-extra="aa">Aire acondicionado</button>
-                  <button type="button" class="extra-chip" data-extra="calefaccion">Calefacción</button>
                   <button type="button" class="extra-chip" data-extra="vistas-mar">Vistas al mar</button>
+                  <button type="button" class="extra-chip" data-extra="primera-linea">Primera línea de playa</button>
                   <button type="button" class="extra-chip" data-extra="domotica">Domótica</button>
                   <button type="button" class="extra-chip" data-extra="amueblado">Amueblado</button>
+                  <button type="button" class="extra-chip" data-extra="armarios">Armarios empotrados</button>
+                  <button type="button" class="extra-chip" data-extra="chimenea">Chimenea</button>
                   <button type="button" class="extra-chip" data-extra="solar">Placas solares</button>
-                  <button type="button" class="extra-chip" data-extra="aerotermia">Aerotermia</button>
-                  <button type="button" class="extra-chip" data-extra="seguridad">Seguridad / Conserjería</button>
-                  <button type="button" class="extra-chip" data-extra="primera-linea">Primera línea de playa</button>
+                  <button type="button" class="extra-chip" data-extra="conserje">Conserjería 24h</button>
+                  <button type="button" class="extra-chip" data-extra="seguridad">Seguridad / Alarma</button>
+                  <button type="button" class="extra-chip" data-extra="gym">Gimnasio en urbanización</button>
+                  <button type="button" class="extra-chip" data-extra="padel">Pádel / Tenis</button>
+                  <button type="button" class="extra-chip" data-extra="zona-infantil">Zona infantil</button>
+                  <button type="button" class="extra-chip" data-extra="acceso-discapacitados">Acceso adaptado</button>
                 </div>
               </div>
             </div>
@@ -4341,7 +4627,7 @@
             <!-- ═══ PASO 4: SITUACIÓN ═══ -->
             <div class="form-step" data-step="4">
               <div class="form-step-header">
-                <div class="form-step-eyebrow">Paso 4 de 5</div>
+                <div class="form-step-eyebrow">Paso 4 de 6</div>
                 <div class="form-step-title">Tu <em>situación actual</em></div>
                 <div class="form-step-subtitle">Esto nos ayuda a asesorarte mejor, sobre todo si hay cargas o casos especiales.</div>
               </div>
@@ -4423,12 +4709,151 @@
               </div>
             </div>
 
-            <!-- ═══ PASO 5: DATOS PERSONALES ═══ -->
+            <!-- ═══ PASO 5: DOCUMENTACIÓN Y CONTEXTO ═══ -->
             <div class="form-step" data-step="5">
               <div class="form-step-header">
-                <div class="form-step-eyebrow">Paso 5 de 5 · Último</div>
+                <div class="form-step-eyebrow">Paso 5 de 6</div>
+                <div class="form-step-title">Documentación <em>y contexto</em></div>
+                <div class="form-step-subtitle">Esto nos permite anticipar trámites y darte una valoración más precisa. Si no sabes alguna respuesta, marca "no lo sé" y lo verificamos por ti gratis.</div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label">¿La propiedad está inscrita en el Registro de la Propiedad?</label>
+                <div class="radio-cards" data-name="registroOk">
+                  <div class="radio-card" data-value="si">
+                    <div class="radio-card-title">Sí, está inscrita</div>
+                    <div class="radio-card-desc">Con escritura y nota simple</div>
+                  </div>
+                  <div class="radio-card" data-value="no-se">
+                    <div class="radio-card-title">No lo sé</div>
+                    <div class="radio-card-desc">Lo verificamos por ti</div>
+                  </div>
+                  <div class="radio-card" data-value="problema">
+                    <div class="radio-card-title">Hay un problema</div>
+                    <div class="radio-card-desc">Discrepancias, ampliaciones sin escriturar...</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label">¿Coincide la superficie del Catastro con la real?</label>
+                <div class="radio-cards" data-name="catastroOk">
+                  <div class="radio-card" data-value="si">
+                    <div class="radio-card-title">Sí, coincide</div>
+                    <div class="radio-card-desc">Los m² son los mismos</div>
+                  </div>
+                  <div class="radio-card" data-value="no">
+                    <div class="radio-card-title">No coincide</div>
+                    <div class="radio-card-desc">Hay diferencias</div>
+                  </div>
+                  <div class="radio-card" data-value="no-se">
+                    <div class="radio-card-title">No lo sé</div>
+                    <div class="radio-card-desc">Lo revisamos</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label">¿La propiedad tiene cédula de habitabilidad / Licencia de Primera Ocupación?</label>
+                <div class="radio-cards" data-name="cedula">
+                  <div class="radio-card" data-value="si">
+                    <div class="radio-card-title">Sí, vigente</div>
+                    <div class="radio-card-desc">En regla y al día</div>
+                  </div>
+                  <div class="radio-card" data-value="caducada">
+                    <div class="radio-card-title">Caducada</div>
+                    <div class="radio-card-desc">Hay que renovarla</div>
+                  </div>
+                  <div class="radio-card" data-value="no">
+                    <div class="radio-card-title">No tiene / No lo sé</div>
+                    <div class="radio-card-desc">La tramitamos nosotros</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label">¿Hay derramas pendientes o ITE pendiente?</label>
+                <div class="radio-cards" data-name="derramas">
+                  <div class="radio-card" data-value="no">
+                    <div class="radio-card-title">No hay nada pendiente</div>
+                    <div class="radio-card-desc">Todo al día</div>
+                  </div>
+                  <div class="radio-card" data-value="si">
+                    <div class="radio-card-title">Sí, hay derramas</div>
+                    <div class="radio-card-desc">Te lo explico abajo</div>
+                  </div>
+                  <div class="radio-card" data-value="ite">
+                    <div class="radio-card-title">ITE pendiente</div>
+                    <div class="radio-card-desc">Edificio con inspección pendiente</div>
+                  </div>
+                  <div class="radio-card" data-value="no-se">
+                    <div class="radio-card-title">No lo sé</div>
+                    <div class="radio-card-desc">Lo verificamos</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-field">
+                  <label class="form-label">Año aproximado de compra</label>
+                  <input type="number" class="form-input" name="anioCompra" placeholder="Ej: 2008" min="1950" max="2030">
+                  <div class="form-helper">Importante para calcular impuestos (IRPF, plusvalía)</div>
+                </div>
+                <div class="form-field">
+                  <label class="form-label">Precio de compra original</label>
+                  <input type="text" class="form-input" name="precioCompra" placeholder="Ej: 180.000 €">
+                  <div class="form-helper">Opcional. Nos ayuda con el cálculo fiscal.</div>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label">¿Eres residente fiscal en España?</label>
+                <div class="radio-cards" data-name="residenteFiscal">
+                  <div class="radio-card" data-value="si">
+                    <div class="radio-card-title">Sí, residente</div>
+                    <div class="radio-card-desc">Tributo IRPF en España</div>
+                  </div>
+                  <div class="radio-card" data-value="no">
+                    <div class="radio-card-title">No, no residente</div>
+                    <div class="radio-card-desc">Aplicará retención del 3%</div>
+                  </div>
+                  <div class="radio-card" data-value="no-se">
+                    <div class="radio-card-title">No lo tengo claro</div>
+                    <div class="radio-card-desc">Te asesoramos</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label">¿Hay copropietarios? (varios titulares)</label>
+                <div class="radio-cards" data-name="copropietarios">
+                  <div class="radio-card" data-value="solo">
+                    <div class="radio-card-title">Solo yo</div>
+                    <div class="radio-card-desc">Titular único</div>
+                  </div>
+                  <div class="radio-card" data-value="pareja">
+                    <div class="radio-card-title">Con mi pareja</div>
+                    <div class="radio-card-desc">Dos titulares casados o pareja</div>
+                  </div>
+                  <div class="radio-card" data-value="varios">
+                    <div class="radio-card-title">Varios titulares</div>
+                    <div class="radio-card-desc">3 o más (herencia, socios...)</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-field full">
+                <label class="form-label">Notas adicionales sobre la propiedad</label>
+                <textarea class="form-textarea" name="notasPropiedad" placeholder="Cualquier detalle relevante: derramas concretas, problemas conocidos, reformas pendientes, historia del inmueble, particularidades..."></textarea>
+              </div>
+            </div>
+
+            <!-- ═══ PASO 6: DATOS PERSONALES ═══ -->
+            <div class="form-step" data-step="6">
+              <div class="form-step-header">
+                <div class="form-step-eyebrow">Paso 6 de 6 · Último</div>
                 <div class="form-step-title">Y por último, <em>tus datos</em></div>
-                <div class="form-step-subtitle">Para poder llamarte y entregarte la valoración completa.</div>
+                <div class="form-step-subtitle">Para poder llamarte y entregarte la valoración profesional.</div>
               </div>
 
               <div class="form-summary" id="formSummary">
@@ -4478,8 +4903,8 @@
                   <select class="form-select" name="idioma">
                     <option>Español</option>
                     <option>English</option>
-                    <option>Deutsch</option>
-                    <option>Nederlands</option>
+                    <option>Português</option>
+                    <option>Română</option>
                   </select>
                 </div>
               </div>
@@ -4791,7 +5216,7 @@
             <div class="logo-tagline" style="color: rgba(247, 242, 234, 0.5);">Costa del Sol</div>
           </div>
         </div>
-        <p class="footer-tagline">Inmobiliaria boutique en la Costa del Sol. De Manilva a Vélez-Málaga. Trato cercano, honorarios transparentes y resultados reales.</p>
+        <p class="footer-tagline">Inmobiliaria en la Costa del Sol. De Manilva a Vélez-Málaga. Trato cercano, honorarios transparentes y resultados reales.</p>
         <div class="footer-social">
           <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg></a>
           <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v8M8 7v.01M12 18v-5a2 2 0 014 0v5"/></svg></a>
@@ -5783,45 +6208,250 @@
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeModal(); closePromoModal(); } });
 
     // ════════════════════════════════════════
-    // CALCULADORA DEL HERO DE VENDER
+    // CALCULADORA DEL HERO DE VENDER · Modelo profesional
     // ════════════════════════════════════════
-    const calcInputs = {
+
+    // Precios base €/m² por sublocalidad (datos reales mercado 2025-26)
+    // Cada sublocalidad tiene rango [min, max] que se promedia
+    const PRICES_PER_SQM = {
+      // MANILVA
+      'manilva.sabinillas':       [2100, 2900],
+      'manilva.manilva-pueblo':   [1700, 2300],
+      'manilva.casares':          [2400, 3400],
+      'manilva.duquesa':          [2600, 3600],
+      'manilva.default':          [2000, 2800],
+
+      // ESTEPONA
+      'estepona.centro':          [2800, 3800],
+      'estepona.casco-antiguo':   [2600, 3500],
+      'estepona.nueva-milla':     [4500, 6800],
+      'estepona.cancelada':       [2900, 3900],
+      'estepona.selwo':           [2700, 3600],
+      'estepona.bahia-dorada':    [3200, 4400],
+      'estepona.default':         [2900, 4000],
+
+      // MARBELLA
+      'marbella.milla-oro':       [7000, 12000],
+      'marbella.nueva-andalucia': [4200, 6500],
+      'marbella.puerto-banus':    [6000, 9500],
+      'marbella.san-pedro':       [3400, 4800],
+      'marbella.elviria':         [3500, 5200],
+      'marbella.las-chapas':      [3800, 5800],
+      'marbella.centro':          [3200, 4800],
+      'marbella.default':         [4000, 6000],
+
+      // MIJAS
+      'mijas.mijas-pueblo':       [2400, 3400],
+      'mijas.mijas-costa':        [2800, 3800],
+      'mijas.la-cala':            [3000, 4200],
+      'mijas.calahonda':          [2900, 4000],
+      'mijas.riviera':            [2700, 3700],
+      'mijas.default':            [2800, 3800],
+
+      // FUENGIROLA
+      'fuengirola.centro':        [3000, 4000],
+      'fuengirola.los-boliches':  [3100, 4100],
+      'fuengirola.torreblanca':   [2700, 3500],
+      'fuengirola.higueron':      [4200, 5800],
+      'fuengirola.default':       [3000, 4000],
+
+      // BENALMÁDENA
+      'benalmadena.pueblo':       [2900, 3900],
+      'benalmadena.costa':        [3000, 4000],
+      'benalmadena.arroyo':       [2600, 3500],
+      'benalmadena.puerto-marina':[3400, 4600],
+      'benalmadena.default':      [2900, 3900],
+
+      // TORREMOLINOS
+      'torremolinos.centro':      [2500, 3300],
+      'torremolinos.carihuela':   [2700, 3500],
+      'torremolinos.playamar':    [2900, 3800],
+      'torremolinos.alamos':      [2400, 3200],
+      'torremolinos.pinillo':     [2200, 3000],
+      'torremolinos.default':     [2500, 3300],
+
+      // MÁLAGA
+      'malaga.centro-historico':  [4200, 5800],
+      'malaga.soho':              [3800, 5200],
+      'malaga.malagueta':         [4500, 6500],
+      'malaga.pedregalejo':       [3500, 4800],
+      'malaga.limonar':           [3600, 5000],
+      'malaga.teatinos':          [2600, 3500],
+      'malaga.cerrado':           [3400, 4600],
+      'malaga.default':           [3500, 4800],
+
+      // RINCÓN
+      'rincon.centro':            [2200, 2900],
+      'rincon.torre-benagalbon':  [2300, 3000],
+      'rincon.cala-moral':        [2400, 3200],
+      'rincon.anoreta':           [2300, 3100],
+      'rincon.default':           [2200, 3000],
+
+      // VÉLEZ-MÁLAGA
+      'velez.centro':             [1500, 2100],
+      'velez.torre-del-mar':      [2200, 3000],
+      'velez.caleta':             [2000, 2700],
+      'velez.almayate':           [1700, 2300],
+      'velez.chilches':           [1700, 2300],
+      'velez.axarquia':           [1500, 2100],
+      'velez.default':            [1700, 2400]
+    };
+
+    // Multiplicadores por tipo de inmueble
+    const TYPE_MULTIPLIERS = {
+      'piso':     1.00,
+      'atico':    1.18,
+      'villa':    1.25,
+      'adosado':  1.05,
+      'casa':     0.92,
+      'duplex':   1.10,
+      'estudio':  0.85
+    };
+
+    // Calcular multiplicador por año (devalúa con antigüedad)
+    function getAgeMultiplier(anio) {
+      if (!anio) return 1.00;
+      const age = 2026 - parseInt(anio);
+      if (age < 0) return 1.10;        // futuro = obra nueva
+      if (age <= 5)  return 1.08;      // <5 años
+      if (age <= 15) return 1.02;      // 5-15 años
+      if (age <= 30) return 0.95;      // 15-30 años
+      if (age <= 50) return 0.88;      // 30-50 años
+      return 0.82;                      // >50 años
+    }
+
+    const calcEls = {
       tipo: document.getElementById('calcTipo'),
       zona: document.getElementById('calcZona'),
+      subzona: document.getElementById('calcSubzona'),
       m2: document.getElementById('calcM2'),
-      estado: document.getElementById('calcEstado')
+      anio: document.getElementById('calcAnio'),
+      estado: document.getElementById('calcEstado'),
+      planta: document.getElementById('calcPlanta'),
+      orientacion: document.getElementById('calcOrientacion'),
+      vistas: document.getElementById('calcVistas')
     };
     const calcBtn = document.getElementById('calcBtn');
+    const calcExtrasActive = new Set();
 
-    if (calcBtn && calcInputs.tipo) {
+    if (calcBtn && calcEls.tipo) {
+
+      // Rellenar subzonas al cambiar municipio
+      calcEls.zona.addEventListener('change', (e) => {
+        const z = e.target.value;
+        calcEls.subzona.innerHTML = '<option value="">Sin especificar (precio medio)</option>';
+        if (z && SUBLOCALITIES[z]) {
+          SUBLOCALITIES[z].forEach(s => {
+            calcEls.subzona.innerHTML += `<option value="${s.key}">${s.name}</option>`;
+          });
+          calcEls.subzona.disabled = false;
+        } else {
+          calcEls.subzona.disabled = true;
+        }
+        checkCalcReady();
+      });
+
       function checkCalcReady() {
-        const allFilled = calcInputs.tipo.value && calcInputs.zona.value && calcInputs.m2.value && calcInputs.estado.value;
-        const validM2 = parseInt(calcInputs.m2.value) >= 20;
-        calcBtn.disabled = !(allFilled && validM2);
+        const allRequired = calcEls.tipo.value && calcEls.zona.value && calcEls.m2.value && calcEls.estado.value;
+        const validM2 = parseInt(calcEls.m2.value) >= 20;
+        calcBtn.disabled = !(allRequired && validM2);
       }
-      Object.values(calcInputs).forEach(input => {
-        if (input) {
-          input.addEventListener('input', checkCalcReady);
-          input.addEventListener('change', checkCalcReady);
+
+      Object.values(calcEls).forEach(el => {
+        if (el) {
+          el.addEventListener('input', checkCalcReady);
+          el.addEventListener('change', checkCalcReady);
         }
       });
 
+      // Toggle extras
+      document.querySelectorAll('.calc-extra-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const key = chip.dataset.extra;
+          if (calcExtrasActive.has(key)) {
+            calcExtrasActive.delete(key);
+            chip.classList.remove('active');
+          } else {
+            calcExtrasActive.add(key);
+            chip.classList.add('active');
+          }
+        });
+      });
+
       calcBtn.addEventListener('click', () => {
-        const tipoOpt = calcInputs.tipo.options[calcInputs.tipo.selectedIndex];
-        const zonaOpt = calcInputs.zona.options[calcInputs.zona.selectedIndex];
-        const estadoOpt = calcInputs.estado.options[calcInputs.estado.selectedIndex];
+        // ════ Cálculo del precio ════
+        const tipo = calcEls.tipo.value;
+        const zona = calcEls.zona.value;
+        const sub = calcEls.subzona.value;
+        const m2 = parseInt(calcEls.m2.value);
+        const anio = calcEls.anio.value;
 
-        const baseM2 = parseFloat(tipoOpt.dataset.precio);
-        const multZona = parseFloat(zonaOpt.dataset.mult);
-        const multEstado = parseFloat(estadoOpt.dataset.mult);
-        const m2 = parseInt(calcInputs.m2.value);
+        // 1. Precio base por m² (rango)
+        const priceKey = sub ? `${zona}.${sub}` : `${zona}.default`;
+        const priceRange = PRICES_PER_SQM[priceKey] || PRICES_PER_SQM[`${zona}.default`] || [2500, 3500];
+        const basePricePerSqm = (priceRange[0] + priceRange[1]) / 2;
 
-        const precioPorM2 = baseM2 * multZona * multEstado;
-        const valor = m2 * precioPorM2;
-        const low = Math.round((valor * 0.9) / 1000) * 1000;
-        const high = Math.round((valor * 1.1) / 1000) * 1000;
+        // 2. Aplicar multiplicadores
+        const typeMult = TYPE_MULTIPLIERS[tipo] || 1.0;
+        const ageMult = getAgeMultiplier(anio);
+        const estadoOpt = calcEls.estado.options[calcEls.estado.selectedIndex];
+        const estadoMult = parseFloat(estadoOpt.dataset.mult || 1.0);
+        const plantaOpt = calcEls.planta.options[calcEls.planta.selectedIndex];
+        const plantaMult = parseFloat(plantaOpt.dataset.mult || 1.0);
+        const orientOpt = calcEls.orientacion.options[calcEls.orientacion.selectedIndex];
+        const orientMult = parseFloat(orientOpt.dataset.mult || 1.0);
+        const vistasOpt = calcEls.vistas.options[calcEls.vistas.selectedIndex];
+        const vistasMult = parseFloat(vistasOpt.dataset.mult || 1.0);
 
-        document.getElementById('calcResultRange').innerHTML = `${formatPrice(low)} <em>—</em> ${formatPrice(high)}`;
+        // Multiplicadores de extras
+        let extrasMult = 1.0;
+        document.querySelectorAll('.calc-extra-chip.active').forEach(chip => {
+          extrasMult *= parseFloat(chip.dataset.mult || 1.0);
+        });
+
+        // Precio final por m²
+        const finalPricePerSqm = basePricePerSqm * typeMult * ageMult * estadoMult * plantaMult * orientMult * vistasMult * extrasMult;
+        const valor = m2 * finalPricePerSqm;
+
+        // Rango ±10%
+        const low = Math.round((valor * 0.90) / 1000) * 1000;
+        const high = Math.round((valor * 1.10) / 1000) * 1000;
+        const avgPerSqm = Math.round(finalPricePerSqm);
+
+        // ════ Renderizar resultado ════
+        document.getElementById('calcResultRange').innerHTML =
+          `${formatPrice(low)} <em>—</em> ${formatPrice(high)}`;
+        document.getElementById('calcResultPer').innerHTML =
+          `Equivale a <strong>${avgPerSqm.toLocaleString('es-ES')} € / m²</strong> · Datos del mercado 2025-26`;
+
+        // Desglose de factores
+        const breakdownItems = [];
+        const zoneText = sub
+          ? SUBLOCALITIES[zona].find(s => s.key === sub)?.name || zona
+          : calcEls.zona.options[calcEls.zona.selectedIndex].text;
+        breakdownItems.push({ label: 'Precio base zona', value: `${Math.round(basePricePerSqm).toLocaleString('es-ES')} €/m²`, type: 'neutral' });
+        breakdownItems.push({ label: 'Ubicación', value: zoneText, type: 'neutral' });
+        if (typeMult !== 1.0) breakdownItems.push({ label: 'Tipo de propiedad', value: `${typeMult > 1 ? '+' : ''}${Math.round((typeMult - 1) * 100)}%`, type: typeMult > 1 ? 'positive' : 'negative' });
+        if (anio) breakdownItems.push({ label: 'Antigüedad', value: `${ageMult > 1 ? '+' : ''}${Math.round((ageMult - 1) * 100)}%`, type: ageMult > 1 ? 'positive' : (ageMult < 1 ? 'negative' : 'neutral') });
+        if (estadoMult !== 1.0) breakdownItems.push({ label: 'Estado de conservación', value: `${estadoMult > 1 ? '+' : ''}${Math.round((estadoMult - 1) * 100)}%`, type: estadoMult > 1 ? 'positive' : 'negative' });
+        if (plantaMult !== 1.0) breakdownItems.push({ label: 'Planta', value: `${plantaMult > 1 ? '+' : ''}${Math.round((plantaMult - 1) * 100)}%`, type: plantaMult > 1 ? 'positive' : 'negative' });
+        if (orientMult !== 1.0) breakdownItems.push({ label: 'Orientación', value: `${orientMult > 1 ? '+' : ''}${Math.round((orientMult - 1) * 100)}%`, type: orientMult > 1 ? 'positive' : 'negative' });
+        if (vistasMult !== 1.0) breakdownItems.push({ label: 'Vistas al mar', value: `+${Math.round((vistasMult - 1) * 100)}%`, type: 'positive' });
+        if (extrasMult !== 1.0) breakdownItems.push({ label: `Extras (${calcExtrasActive.size})`, value: `+${Math.round((extrasMult - 1) * 100)}%`, type: 'positive' });
+
+        const breakdownHTML = `
+          <div class="calc-breakdown-title">Cómo hemos calculado este rango</div>
+          <div class="calc-breakdown-list">
+            ${breakdownItems.map(item => `
+              <div class="calc-breakdown-item">
+                <span class="label">${item.label}</span>
+                <span class="value ${item.type}">${item.value}</span>
+              </div>
+            `).join('')}
+          </div>
+        `;
+        document.getElementById('calcBreakdown').innerHTML = breakdownHTML;
+
         document.getElementById('calcResult').classList.add('visible');
         setTimeout(() => {
           document.getElementById('calcResult').scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -5832,13 +6462,25 @@
     // ════════════════════════════════════════
     // FORMULARIO MULTI-STEP DE VENDER
     // ════════════════════════════════════════
-    const FORM_TOTAL_STEPS = 5;
+    const FORM_TOTAL_STEPS = 6;
     let currentStep = 1;
     const formData = {
+      // Paso 1
       tipo: '', municipio: '', localidad: '', direccion: '',
-      m2utiles: '', m2construidos: '', m2parcela: '', anio: '', planta: '', orientacion: '',
-      dormitorios: '', banios: '', aseos: '', estado: '', extras: [],
+      // Paso 2
+      m2utiles: '', m2construidos: '', m2parcela: '', m2terraza: '',
+      anio: '', anioReforma: '', planta: '', orientacion: '', vistas: '',
+      certificado: '', comunidad: '', ibi: '',
+      // Paso 3
+      dormitorios: '', banios: '', aseos: '', garajes: '', trasteros: '',
+      estado: '', calefaccion: '', ac: '', cocina: '', extras: [],
+      // Paso 4
       ocupacion: '', hipoteca: '', plazo: '', precioMente: '',
+      // Paso 5
+      registroOk: '', catastroOk: '', cedula: '', derramas: '',
+      anioCompra: '', precioCompra: '', residenteFiscal: '', copropietarios: '',
+      notasPropiedad: '',
+      // Paso 6
       nombre: '', apellidos: '', email: '', telefono: '', mensaje: '', horario: '', idioma: 'Español'
     };
 
@@ -5988,8 +6630,8 @@
         }
       });
 
-      // Consentimiento en paso 5
-      if (step === 5) {
+      // Consentimiento en paso 6 (último)
+      if (step === 6) {
         const consent = stepEl.querySelector('input[name="consent"]');
         if (consent && !consent.checked) {
           valid = false;
@@ -6036,8 +6678,8 @@
       document.getElementById('navCurrentStep').textContent = n;
       currentStep = n;
 
-      // Si llegamos al paso 5, actualizar resumen
-      if (n === 5) updateSummary();
+      // Si llegamos al paso 6, actualizar resumen
+      if (n === 6) updateSummary();
 
       // Scroll arriba del card del form
       const card = document.querySelector('.form-card');
@@ -6111,7 +6753,7 @@
     // ════ Submit final ════
     function submitForm(e) {
       e.preventDefault();
-      if (!validateStep(5)) return false;
+      if (!validateStep(6)) return false;
       // Simulación (en producción aquí va el POST al backend / Formspree / Resend)
       const submitBtn = document.getElementById('formBtnSubmit');
       submitBtn.disabled = true;
