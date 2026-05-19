@@ -782,21 +782,39 @@
     .modal-close svg { width: 16px; height: 16px; stroke: var(--ink); stroke-width: 2; }
 
     .modal-gallery {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      gap: 6px;
+      position: relative;
+      width: 100%;
       height: 460px;
+      background: var(--ink);
+      overflow: hidden;
+    }
+
+    /* Slides */
+    .modal-gallery-track {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.45s cubic-bezier(.2,.8,.2,1);
+    }
+    .modal-gallery-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
       position: relative;
     }
-    .modal-gallery img { width: 100%; height: 100%; object-fit: cover; }
-    .modal-gallery img:first-child { grid-row: 1 / 3; }
+    .modal-gallery-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      cursor: zoom-in;
+    }
 
-    /* Overlay con info clave sobre la galería (mejora legibilidad) */
+    /* Overlay con título sobre la foto (igual que antes) */
     .modal-gallery-overlay {
       position: absolute;
-      left: 2rem; right: 2rem; bottom: 1.5rem;
-      z-index: 3;
+      left: 2rem; right: 6rem; bottom: 1.5rem;
+      z-index: 4;
       color: var(--cream);
       pointer-events: none;
       text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
@@ -828,21 +846,189 @@
       font-weight: 600;
       letter-spacing: -0.025em;
       line-height: 1.05;
-      max-width: 70%;
     }
     .modal-gallery-overlay h2 em { font-style: italic; color: var(--clay-soft); font-weight: 400; }
-    /* Degradado sobre la imagen principal para legibilidad */
+
+    /* Degradado oscuro inferior */
     .modal-gallery::after {
       content: '';
       position: absolute;
-      left: 0; bottom: 0;
-      width: calc(66% - 3px);
-      height: 70%;
-      background: linear-gradient(180deg, transparent 0%, rgba(26, 24, 20, 0.75) 100%);
+      left: 0; right: 0; bottom: 0;
+      height: 65%;
+      background: linear-gradient(180deg, transparent 0%, rgba(26, 24, 20, 0.85) 100%);
       pointer-events: none;
       z-index: 2;
-      border-radius: 0 0 0 24px;
     }
+
+    /* Flechas */
+    .modal-gallery-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(251, 248, 241, 0.92);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(26, 24, 20, 0.08);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 6;
+      transition: all 0.2s;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+    .modal-gallery-arrow:hover {
+      background: var(--cream);
+      transform: translateY(-50%) scale(1.08);
+    }
+    .modal-gallery-arrow:disabled {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .modal-gallery-arrow svg {
+      width: 18px; height: 18px;
+      stroke: var(--ink);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .modal-gallery-arrow.prev { left: 1rem; }
+    .modal-gallery-arrow.next { right: 1rem; }
+
+    /* Contador de fotos */
+    .modal-gallery-counter {
+      position: absolute;
+      top: 1.2rem; left: 1.2rem;
+      z-index: 6;
+      background: rgba(15, 61, 62, 0.78);
+      backdrop-filter: blur(8px);
+      color: var(--cream);
+      padding: 0.4rem 0.9rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      display: flex; align-items: center; gap: 0.45rem;
+    }
+    .modal-gallery-counter svg {
+      width: 14px; height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+    }
+    .modal-gallery-counter strong {
+      color: var(--sun);
+      font-weight: 700;
+    }
+
+    /* Miniaturas debajo */
+    .modal-thumbs {
+      display: flex;
+      gap: 6px;
+      padding: 10px 12px;
+      background: var(--ink);
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: var(--clay) rgba(255,255,255,0.08);
+    }
+    .modal-thumbs::-webkit-scrollbar { height: 6px; }
+    .modal-thumbs::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 3px; }
+    .modal-thumbs::-webkit-scrollbar-thumb { background: var(--clay); border-radius: 3px; }
+    .modal-thumb {
+      flex: 0 0 90px;
+      width: 90px;
+      height: 64px;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+      opacity: 0.55;
+    }
+    .modal-thumb:hover { opacity: 0.9; }
+    .modal-thumb.active {
+      border-color: var(--sun);
+      opacity: 1;
+    }
+    .modal-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+
+    /* Si solo hay 1 foto, ocultamos los controles */
+    .modal-gallery[data-single="true"] .modal-gallery-arrow,
+    .modal-gallery[data-single="true"] .modal-gallery-counter,
+    .modal-gallery[data-single="true"] ~ .modal-thumbs {
+      display: none;
+    }
+
+    /* ════ LIGHTBOX (vista pantalla completa) ════ */
+    .lightbox {
+      position: fixed; inset: 0;
+      background: rgba(8, 6, 4, 0.96);
+      z-index: 300;
+      display: none;
+      align-items: center; justify-content: center;
+      padding: 2rem;
+    }
+    .lightbox.active { display: flex; animation: lightboxIn 0.3s ease; }
+    @keyframes lightboxIn { from { opacity: 0; } to { opacity: 1; } }
+    .lightbox-img {
+      max-width: 95%;
+      max-height: 92vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+      animation: lightboxZoom 0.35s cubic-bezier(.2,.8,.2,1);
+    }
+    @keyframes lightboxZoom {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .lightbox-close, .lightbox-arrow {
+      position: absolute;
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: rgba(251, 248, 241, 0.12);
+      backdrop-filter: blur(10px);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      z-index: 5;
+    }
+    .lightbox-close { top: 1.5rem; right: 1.5rem; }
+    .lightbox-arrow.prev { left: 1.5rem; top: 50%; transform: translateY(-50%); }
+    .lightbox-arrow.next { right: 1.5rem; top: 50%; transform: translateY(-50%); }
+    .lightbox-close:hover, .lightbox-arrow:hover {
+      background: rgba(251, 248, 241, 0.22);
+      transform: scale(1.08);
+    }
+    .lightbox-arrow.prev:hover { transform: translateY(-50%) scale(1.08); }
+    .lightbox-arrow.next:hover { transform: translateY(-50%) scale(1.08); }
+    .lightbox-close svg, .lightbox-arrow svg {
+      width: 20px; height: 20px;
+      stroke: var(--cream);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .lightbox-counter {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--cream);
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      background: rgba(251, 248, 241, 0.08);
+      backdrop-filter: blur(8px);
+      padding: 0.5rem 1.1rem;
+      border-radius: 100px;
+    }
+    .lightbox-counter strong { color: var(--sun); font-weight: 600; font-style: normal; }
 
     .modal-content { padding: 2.5rem 3rem 3rem; display: grid; grid-template-columns: 1.4fr 1fr; gap: 3rem; }
     .modal-main h2 { font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 600; letter-spacing: -0.025em; color: var(--ink); line-height: 1.1; margin-bottom: 0.5rem; }
@@ -3017,11 +3203,19 @@
       .properties-panel { position: static; max-height: none; padding: 2rem 1.5rem 3rem; }
       .properties-panel .properties-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
       .modal-content { grid-template-columns: 1fr; gap: 1.5rem; padding: 1.5rem; }
-      .modal-gallery { height: 320px; }
-      .modal-gallery-overlay { left: 1.25rem; right: 1.25rem; bottom: 1rem; }
-      .modal-gallery-overlay h2 { font-size: 1.5rem; max-width: 100%; }
+      .modal-gallery { height: 280px; }
+      .modal-gallery-overlay { left: 1.25rem; right: 5rem; bottom: 1rem; }
+      .modal-gallery-overlay h2 { font-size: 1.4rem; }
       .modal-gallery-overlay-zone { font-size: 0.62rem; padding: 0.35rem 0.75rem; margin-bottom: 0.55rem; }
-      .modal-gallery::after { width: 100%; }
+      .modal-gallery-arrow { width: 38px; height: 38px; }
+      .modal-gallery-arrow.prev { left: 0.6rem; }
+      .modal-gallery-arrow.next { right: 0.6rem; }
+      .modal-gallery-counter { top: 0.7rem; left: 0.7rem; font-size: 0.7rem; padding: 0.3rem 0.7rem; }
+      .modal-thumb { flex: 0 0 70px; width: 70px; height: 50px; }
+      .lightbox-close, .lightbox-arrow { width: 40px; height: 40px; }
+      .lightbox-close { top: 1rem; right: 1rem; }
+      .lightbox-arrow.prev { left: 0.6rem; }
+      .lightbox-arrow.next { right: 0.6rem; }
       .modal-sidebar { position: static; }
     }
     @media (max-width: 1024px) {
@@ -3562,7 +3756,7 @@
                 Z
               "/>
               <text class="zone-label" x="78" y="248" text-anchor="middle">Manilva</text>
-              <text class="zone-count" x="78" y="263" text-anchor="middle">2 propiedades</text>
+              <text class="zone-count" x="78" y="263" text-anchor="middle">Cargando...</text>
             </g>
 
             <!-- 2. ESTEPONA · larga franja costera, sale más al sur -->
@@ -3583,7 +3777,7 @@
                 Z
               "/>
               <text class="zone-label" x="185" y="225" text-anchor="middle">Estepona</text>
-              <text class="zone-count" x="185" y="240" text-anchor="middle">2 propiedades</text>
+              <text class="zone-count" x="185" y="240" text-anchor="middle">Cargando...</text>
             </g>
 
             <!-- 3. MARBELLA · saliente característico (Punta Marbella) -->
@@ -3605,7 +3799,7 @@
                 Z
               "/>
               <text class="zone-label" x="330" y="208" text-anchor="middle">Marbella</text>
-              <text class="zone-count" x="330" y="223" text-anchor="middle">2 propiedades</text>
+              <text class="zone-count" x="330" y="223" text-anchor="middle">Cargando...</text>
             </g>
 
             <!-- 4. MIJAS · zona interior, montañosa -->
@@ -3625,7 +3819,7 @@
                 Z
               "/>
               <text class="zone-label" x="460" y="170" text-anchor="middle">Mijas</text>
-              <text class="zone-count" x="460" y="185" text-anchor="middle">2 propiedades</text>
+              <text class="zone-count" x="460" y="185" text-anchor="middle">Cargando...</text>
             </g>
 
             <!-- 5. FUENGIROLA · pequeña pero costera -->
@@ -3642,7 +3836,7 @@
                 Z
               "/>
               <text class="zone-label" x="500" y="248" text-anchor="middle">Fuengirola</text>
-              <text class="zone-count" x="500" y="263" text-anchor="middle">2 propiedades</text>
+              <text class="zone-count" x="500" y="263" text-anchor="middle">Cargando...</text>
             </g>
 
             <!-- 6. BENALMÁDENA -->
@@ -3660,7 +3854,7 @@
                 Z
               "/>
               <text class="zone-label" x="560" y="200" text-anchor="middle">Benalmádena</text>
-              <text class="zone-count" x="560" y="215" text-anchor="middle">2 propiedades</text>
+              <text class="zone-count" x="560" y="215" text-anchor="middle">Cargando...</text>
             </g>
 
             <!-- 7. TORREMOLINOS -->
@@ -3677,7 +3871,7 @@
                 Z
               "/>
               <text class="zone-label" x="623" y="170" text-anchor="middle">Torremolinos</text>
-              <text class="zone-count" x="623" y="183" text-anchor="middle">2 propiedades</text>
+              <text class="zone-count" x="623" y="183" text-anchor="middle">Cargando...</text>
             </g>
 
             <!-- 8. MÁLAGA · capital, gran zona -->
@@ -3697,7 +3891,7 @@
                 Z
               "/>
               <text class="zone-label" x="685" y="138" text-anchor="middle">Málaga</text>
-              <text class="zone-count" x="685" y="153" text-anchor="middle">2 propiedades</text>
+              <text class="zone-count" x="685" y="153" text-anchor="middle">Cargando...</text>
             </g>
 
             <!-- 9. RINCÓN DE LA VICTORIA -->
@@ -3714,7 +3908,7 @@
                 Z
               "/>
               <text class="zone-label" x="742" y="226" text-anchor="middle">Rincón</text>
-              <text class="zone-count" x="742" y="240" text-anchor="middle">2 propiedades</text>
+              <text class="zone-count" x="742" y="240" text-anchor="middle">Cargando...</text>
             </g>
 
             <!-- 10. VÉLEZ-MÁLAGA · extremo este, Axarquía -->
@@ -3732,7 +3926,7 @@
                 Z
               "/>
               <text class="zone-label" x="760" y="155" text-anchor="middle">Vélez</text>
-              <text class="zone-count" x="760" y="169" text-anchor="middle">2 propiedades</text>
+              <text class="zone-count" x="760" y="169" text-anchor="middle">Cargando...</text>
             </g>
 
             <!-- ═══════════ DETALLES DECORATIVOS ═══════════ -->
@@ -5103,7 +5297,21 @@
       <button class="modal-close" onclick="closeModal()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
-      <div class="modal-gallery" id="modalGallery"></div>
+      <div class="modal-gallery" id="modalGallery">
+        <div class="modal-gallery-track" id="modalGalleryTrack"></div>
+        <button class="modal-gallery-arrow prev" id="modalGalleryPrev" onclick="galleryNav(-1)" aria-label="Anterior">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="modal-gallery-arrow next" id="modalGalleryNext" onclick="galleryNav(1)" aria-label="Siguiente">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <div class="modal-gallery-counter">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <strong id="modalGalleryCurrent">1</strong> / <span id="modalGalleryTotal">1</span>
+        </div>
+        <div class="modal-gallery-overlay" id="modalGalleryOverlay"></div>
+      </div>
+      <div class="modal-thumbs" id="modalThumbs"></div>
       <div class="modal-content">
         <div class="modal-main">
           <div class="modal-features" id="modalFeatures"></div>
@@ -5146,6 +5354,21 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- LIGHTBOX (galería pantalla completa) -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <button class="lightbox-arrow prev" onclick="lightboxNav(-1)" aria-label="Anterior">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    <button class="lightbox-arrow next" onclick="lightboxNav(1)" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <div class="lightbox-counter"><strong id="lightboxCurrent">1</strong> de <span id="lightboxTotal">1</span></div>
   </div>
 
   <!-- PROMO MODAL -->
@@ -5279,28 +5502,7 @@
       velez: { name: 'Vélez-Málaga', label: 'Vélez-Málaga · La Axarquía' }
     };
 
-    const PROPERTIES = [
-      { id: 1, zone: 'manilva', sub: 'casares', titulo: 'Villa contemporánea con vistas a Gibraltar', tipo: 'Villa', precio: 685000, m2: 220, dorm: 4, banios: 3, ubicacion: 'Manilva, Casares', piscina: true, mar: true, obra: false, descripcion: 'Villa moderna de obra reciente con piscina infinity, jardín mediterráneo y vistas despejadas a Gibraltar. Cocina abierta de diseño, microcemento, aerotermia y placas solares.', extras: ['Piscina infinity','Aerotermia','Placas solares','Domótica','Garaje 2 plazas'], lat: 36.3445, lng: -5.2419, mapMode: 'exact', img: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200&q=80','https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80','https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80'] },
-      { id: 2, zone: 'manilva', sub: 'sabinillas', titulo: 'Apartamento en primera línea de playa', tipo: 'Piso', precio: 295000, m2: 92, dorm: 2, banios: 2, ubicacion: 'Manilva, Sabinillas', piscina: true, mar: true, obra: false, descripcion: 'Apartamento luminoso en urbanización con piscina comunitaria, a 50 metros de la playa. Terraza al sur con vistas frontales al mar. Reformado en 2022.', extras: ['Piscina comunitaria','Trastero','Garaje','A/A'], lat: 36.3517, lng: -5.2381, mapMode: 'area', img: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80','https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80','https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&q=80'] },
-      { id: 3, zone: 'estepona', sub: 'centro', titulo: 'Ático dúplex con solárium privado', tipo: 'Ático', precio: 540000, m2: 145, dorm: 3, banios: 2, ubicacion: 'Estepona Centro', piscina: true, mar: true, obra: true, descripcion: 'Ático dúplex en residencial boutique a 5 minutos del casco histórico. Solárium privado de 60 m² con piscina y vistas al mar. Acabados premium.', extras: ['Solárium privado','Piscina propia','Vistas al mar','Domótica','Garaje doble'], lat: 36.4264, lng: -5.1453, mapMode: 'exact', img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80','https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80','https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80'] },
-      { id: 4, zone: 'estepona', sub: 'casco-antiguo', titulo: 'Casa de pueblo restaurada con patio', tipo: 'Casa de pueblo', precio: 245000, m2: 110, dorm: 3, banios: 2, ubicacion: 'Estepona Casco Antiguo', piscina: false, mar: false, obra: false, descripcion: 'Casa de pueblo en el corazón del casco antiguo. Restauración cuidada conservando vigas originales y azulejos andaluces. Patio andaluz interior y azotea.', extras: ['Patio andaluz','Vigas originales','A pie de bares','Azotea con vistas'], lat: 36.4275, lng: -5.145, mapMode: 'area', img: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1200&q=80','https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800&q=80','https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=80'] },
-      { id: 5, zone: 'marbella', sub: 'milla-oro', titulo: 'Villa de lujo en la Milla de Oro', tipo: 'Villa', precio: 2950000, m2: 480, dorm: 6, banios: 6, ubicacion: 'Marbella, Milla de Oro', piscina: true, mar: true, obra: false, descripcion: 'Villa exclusiva en la Milla de Oro. Parcela de 1.500 m² con jardín tropical, piscina climatizada y zona spa. Cinco minutos del Puerto Banús.', extras: ['Piscina climatizada','Spa privado','Cine en casa','Bodega','Vigilancia 24h','Garaje 4 plazas'], lat: 36.4948, lng: -4.9425, mapMode: 'area', img: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1200&q=80','https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80','https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80'] },
-      { id: 6, zone: 'marbella', sub: 'nueva-andalucia', titulo: 'Apartamento moderno en Nueva Andalucía', tipo: 'Piso', precio: 475000, m2: 105, dorm: 2, banios: 2, ubicacion: 'Marbella, Nueva Andalucía', piscina: true, mar: false, obra: true, descripcion: 'Obra nueva en complejo residencial con piscina, gimnasio y conserjería. Acabados de diseño, terraza orientada al suroeste con vistas a La Concha.', extras: ['Gimnasio','Conserjería 24h','Piscina','Vistas a La Concha'], lat: 36.4937, lng: -4.9518, mapMode: 'exact', img: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&q=80','https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80','https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80'] },
-      { id: 7, zone: 'mijas', sub: 'mijas-pueblo', titulo: 'Cortijo andaluz con olivar', tipo: 'Villa', precio: 1250000, m2: 380, dorm: 5, banios: 4, ubicacion: 'Mijas Pueblo', piscina: true, mar: true, obra: false, descripcion: 'Cortijo tradicional reformado: tejas árabes, vigas de madera y patio central. Parcela de 8.000 m² con olivar centenario y vistas a la costa.', extras: ['Olivar centenario','Patio andaluz','Vistas al mar','Chimenea','Casa de invitados'], lat: 36.5957, lng: -4.6356, mapMode: 'exact', img: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80','https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80','https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&q=80'] },
-      { id: 8, zone: 'mijas', sub: 'calahonda', titulo: 'Adosado familiar con jardín privado', tipo: 'Adosado', precio: 395000, m2: 165, dorm: 3, banios: 3, ubicacion: 'Mijas Costa, Calahonda', piscina: true, mar: false, obra: false, descripcion: 'Adosado en urbanización privada con piscina comunitaria. Jardín privado de 80 m², garaje subterráneo y zona de barbacoa.', extras: ['Jardín privado','BBQ','Garaje','Piscina','Pádel en urbanización'], lat: 36.486, lng: -4.6975, mapMode: 'area', img: 'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=1200&q=80','https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80','https://images.unsplash.com/photo-1567496898669-ee935f5f647a?w=800&q=80'] },
-      { id: 9, zone: 'fuengirola', sub: 'los-boliches', titulo: 'Piso reformado en el paseo marítimo', tipo: 'Piso', precio: 385000, m2: 98, dorm: 2, banios: 2, ubicacion: 'Fuengirola, Los Boliches', piscina: false, mar: true, obra: true, descripcion: 'Reformado integralmente en primera línea de playa. Vistas frontales al mar desde el salón y dormitorio principal. Edificio con piscina.', extras: ['Primera línea','Vistas al mar','Reforma 2024','Piscina'], lat: 36.5395, lng: -4.6116, mapMode: 'exact', img: 'https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1554995207-c18c203602cb?w=1200&q=80','https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=80','https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=800&q=80'] },
-      { id: 10, zone: 'fuengirola', sub: 'centro', titulo: 'Ático con terraza panorámica', tipo: 'Ático', precio: 525000, m2: 135, dorm: 3, banios: 2, ubicacion: 'Fuengirola Centro', piscina: true, mar: true, obra: false, descripcion: 'Ático en el centro con terraza envolvente de 50 m² y vistas panorámicas al mar y a la montaña. Edificio con piscina en azotea.', extras: ['Terraza 50m²','Piscina azotea','Vistas 270°','Trastero'], lat: 36.5403, lng: -4.623, mapMode: 'exact', img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80','https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80','https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=80'] },
-      { id: 11, zone: 'benalmadena', sub: 'pueblo', titulo: 'Villa con vistas espectaculares al mar', tipo: 'Villa', precio: 895000, m2: 290, dorm: 4, banios: 4, ubicacion: 'Benalmádena Pueblo', piscina: true, mar: true, obra: false, descripcion: 'Villa independiente en zona residencial elevada con vistas panorámicas. Tres plantas, piscina con cloración salina y amplio garaje.', extras: ['Vistas panorámicas','Piscina salina','Bodega climatizada','Garaje 3 coches'], lat: 36.595, lng: -4.5167, mapMode: 'area', img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80','https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&q=80','https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80'] },
-      { id: 12, zone: 'benalmadena', sub: 'puerto-marina', titulo: 'Estudio moderno cerca del puerto', tipo: 'Piso', precio: 185000, m2: 52, dorm: 1, banios: 1, ubicacion: 'Benalmádena, Puerto Marina', piscina: true, mar: false, obra: true, descripcion: 'Estudio acogedor a 2 minutos de Puerto Marina. Cocina americana, decoración moderna, perfecto como inversión o pied-à-terre.', extras: ['Cerca del puerto','Piscina','Amueblado','Alta rentabilidad'], lat: 36.6045, lng: -4.5093, mapMode: 'exact', img: 'https://images.unsplash.com/photo-1502672023488-70e25813eb80?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1502672023488-70e25813eb80?w=1200&q=80','https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=800&q=80','https://images.unsplash.com/photo-1560185009-5bf9f2849488?w=800&q=80'] },
-      { id: 13, zone: 'torremolinos', sub: 'carihuela', titulo: 'Apartamento con terraza al mar', tipo: 'Piso', precio: 320000, m2: 88, dorm: 2, banios: 2, ubicacion: 'Torremolinos, La Carihuela', piscina: false, mar: true, obra: false, descripcion: 'Apartamento de 2 dormitorios en La Carihuela, a 100 m de la playa. Terraza con vistas laterales al mar. Zona de chiringuitos tradicionales.', extras: ['Vistas al mar','Cerca de chiringuitos','Trastero'], lat: 36.6234, lng: -4.505, mapMode: 'exact', img: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=1200&q=80','https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80','https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&q=80'] },
-      { id: 14, zone: 'torremolinos', sub: 'playamar', titulo: 'Ático con piscina privada en azotea', tipo: 'Ático', precio: 615000, m2: 155, dorm: 3, banios: 3, ubicacion: 'Torremolinos, Playamar', piscina: true, mar: true, obra: true, descripcion: 'Ático de obra reciente con piscina privada en la azotea, jacuzzi y zona chill-out. Tres dormitorios con baño en suite.', extras: ['Piscina privada','Jacuzzi','Cocina italiana','Suelo radiante'], lat: 36.6196, lng: -4.4925, mapMode: 'exact', img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80','https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80','https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=80'] },
-      { id: 15, zone: 'malaga', sub: 'soho', titulo: 'Loft de diseño en el Soho', tipo: 'Piso', precio: 425000, m2: 110, dorm: 2, banios: 2, ubicacion: 'Málaga, Soho', piscina: false, mar: false, obra: true, descripcion: 'Loft reformado por estudio de diseño en el Soho. Techos altos, ladrillo visto y suelos de microcemento. A pie del Pompidou.', extras: ['Techos altos','Ladrillo visto','Reforma de autor','Cerca Pompidou'], lat: 36.7148, lng: -4.4214, mapMode: 'exact', img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80','https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=800&q=80','https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80'] },
-      { id: 16, zone: 'malaga', sub: 'centro-historico', titulo: 'Piso señorial en el centro histórico', tipo: 'Piso', precio: 765000, m2: 175, dorm: 4, banios: 3, ubicacion: 'Málaga, Centro Histórico', piscina: false, mar: false, obra: false, descripcion: 'Piso señorial de finales del XIX cerca de Calle Larios, completamente rehabilitado. Suelos hidráulicos originales, molduras y balcones a la calle.', extras: ['Edificio histórico','Suelos hidráulicos','Molduras','A pie de Larios'], lat: 36.7212, lng: -4.4214, mapMode: 'exact', img: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80','https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&q=80','https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=800&q=80'] },
-      { id: 17, zone: 'rincon', sub: 'torre-benagalbon', titulo: 'Casa adosada con vistas al mar', tipo: 'Adosado', precio: 365000, m2: 175, dorm: 4, banios: 3, ubicacion: 'Rincón de la Victoria, Torre de Benagalbón', piscina: true, mar: true, obra: false, descripcion: 'Adosado en urbanización tranquila con vistas al mar y a la montaña. Tres plantas con terraza superior, garaje propio y zona ajardinada.', extras: ['Vistas al mar','Garaje','Trastero','Piscina','Jardín privado'], lat: 36.7274, lng: -4.2837, mapMode: 'exact', img: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200&q=80','https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800&q=80','https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80'] },
-      { id: 18, zone: 'rincon', sub: 'centro', titulo: 'Apartamento en primera línea', tipo: 'Piso', precio: 285000, m2: 85, dorm: 2, banios: 2, ubicacion: 'Rincón de la Victoria', piscina: true, mar: true, obra: true, descripcion: 'Apartamento moderno en residencial de obra nueva en primera línea de playa. Terraza con vistas al Mediterráneo y a la sierra.', extras: ['Primera línea','Obra nueva 2024','Piscina infinity','Gimnasio'], lat: 36.7187, lng: -4.274, mapMode: 'exact', img: 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=1200&q=80','https://images.unsplash.com/photo-1502672023488-70e25813eb80?w=800&q=80','https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80'] },
-      { id: 19, zone: 'velez', sub: 'axarquia', titulo: 'Cortijo en la Axarquía con bodega', tipo: 'Villa', precio: 575000, m2: 245, dorm: 4, banios: 3, ubicacion: 'Vélez-Málaga, La Axarquía', piscina: true, mar: true, obra: false, descripcion: 'Cortijo restaurado rodeado de viñedos y olivos. Parcela de 12.000 m² con bodega propia, piscina infinity y vistas al mar.', extras: ['Viñedo propio','Bodega','Piscina infinity','Olivos','Pozo propio'], lat: 36.8045, lng: -4.0989, mapMode: 'area', img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80','https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80','https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80'] },
-      { id: 20, zone: 'velez', sub: 'torre-del-mar', titulo: 'Adosado en Torre del Mar', tipo: 'Adosado', precio: 235000, m2: 130, dorm: 3, banios: 2, ubicacion: 'Vélez-Málaga, Torre del Mar', piscina: true, mar: false, obra: false, descripcion: 'Adosado en urbanización tranquila a 500 m de la playa de Torre del Mar. Patio privado, terraza superior y piscina comunitaria.', extras: ['Cerca de la playa','Piscina','Patio privado','Trastero'], lat: 36.7385, lng: -4.0938, mapMode: 'exact', img: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80', gallery: ['https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1200&q=80','https://images.unsplash.com/photo-1567496898669-ee935f5f647a?w=800&q=80','https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800&q=80'] }
-    ];
+    let PROPERTIES = []; // Se carga dinámicamente desde Sheety
 
     // Diccionario de sublocalidades por municipio
     const SUBLOCALITIES = {
@@ -5462,10 +5664,17 @@
 
     document.querySelectorAll('.zone-region').forEach(region => {
       const zoneKey = region.dataset.zone;
-      const zoneProps = PROPERTIES.filter(p => p.zone === zoneKey);
 
       region.addEventListener('mouseenter', () => {
-        if (zoneProps.length === 0) return;
+        const zoneProps = PROPERTIES.filter(p => p.zone === zoneKey);
+        if (zoneProps.length === 0) {
+          // Aún sin propiedades en esta zona
+          document.getElementById('tooltipName').textContent = ZONES[zoneKey].name;
+          document.getElementById('tooltipCount').textContent = '0';
+          document.getElementById('tooltipPrice').textContent = '—';
+          tooltip.classList.add('visible');
+          return;
+        }
         const minPrice = Math.min(...zoneProps.map(p => p.precio));
         document.getElementById('tooltipName').textContent = ZONES[zoneKey].name;
         document.getElementById('tooltipCount').textContent = zoneProps.length;
@@ -5871,19 +6080,170 @@
         mapSection.style.display = 'none';
       }
 
-      // Galería con overlay (título sobre la foto)
-      const galleryHTML = p.gallery.map(src => `<img src="${src}" alt="${p.titulo}">`).join('') +
-        `<div class="modal-gallery-overlay">
-          <div class="modal-gallery-overlay-zone">${p.ubicacion}</div>
-          <h2>${p.titulo}</h2>
-        </div>`;
-      document.getElementById('modalGallery').innerHTML = galleryHTML;
+      // Galería como carrusel deslizable (admite cualquier número de fotos)
+      buildGalleryCarousel(p);
 
       const msg = encodeURIComponent(`Hola Solenne, me interesa la propiedad "${p.titulo}" (Ref. SOL-${String(p.id).padStart(4, '0')}) en ${p.ubicacion}. ¿Podríamos hablar?`);
       document.getElementById('modalWhatsapp').href = `https://wa.me/34600000000?text=${msg}`;
       document.getElementById('modalBackdrop').classList.add('active');
       document.body.style.overflow = 'hidden';
     }
+
+    // ════════════════════════════════════════
+    // CARRUSEL DE FOTOS DE PROPIEDAD
+    // ════════════════════════════════════════
+    let galleryImages = [];      // URLs actuales
+    let galleryIndex = 0;         // foto actual
+    let galleryProperty = null;   // datos de la propiedad activa (para lightbox)
+
+    function buildGalleryCarousel(p) {
+      // Componer el set de imágenes: gallery primero; si vacío, usar img como fallback
+      galleryImages = (p.gallery && p.gallery.length > 0) ? p.gallery : (p.img ? [p.img] : []);
+      galleryIndex = 0;
+      galleryProperty = p;
+
+      const galleryEl = document.getElementById('modalGallery');
+      const track = document.getElementById('modalGalleryTrack');
+      const thumbs = document.getElementById('modalThumbs');
+      const overlay = document.getElementById('modalGalleryOverlay');
+      const counterCurrent = document.getElementById('modalGalleryCurrent');
+      const counterTotal = document.getElementById('modalGalleryTotal');
+
+      // Si no hay fotos, ocultar todo
+      if (galleryImages.length === 0) {
+        galleryEl.style.display = 'none';
+        thumbs.style.display = 'none';
+        return;
+      }
+      galleryEl.style.display = 'block';
+
+      // Marcar como "single" si solo hay 1 foto (oculta flechas, contador y miniaturas)
+      galleryEl.dataset.single = galleryImages.length === 1 ? 'true' : 'false';
+
+      // Slides (loading="lazy" excepto la primera)
+      track.innerHTML = galleryImages.map((src, i) => `
+        <div class="modal-gallery-slide">
+          <img src="${src}" alt="${p.titulo} (${i+1})" loading="${i === 0 ? 'eager' : 'lazy'}" onclick="openLightbox(${i})">
+        </div>
+      `).join('');
+
+      // Miniaturas
+      thumbs.innerHTML = galleryImages.map((src, i) => `
+        <div class="modal-thumb ${i === 0 ? 'active' : ''}" data-idx="${i}" onclick="galleryGoTo(${i})">
+          <img src="${src}" alt="" loading="lazy">
+        </div>
+      `).join('');
+      thumbs.style.display = galleryImages.length === 1 ? 'none' : 'flex';
+
+      // Overlay (título de la propiedad sobre la foto)
+      overlay.innerHTML = `
+        <div class="modal-gallery-overlay-zone">${p.ubicacion}</div>
+        <h2>${p.titulo}</h2>
+      `;
+
+      // Counter
+      counterCurrent.textContent = '1';
+      counterTotal.textContent = galleryImages.length;
+
+      // Posición inicial del track
+      track.style.transform = 'translateX(0)';
+      updateGalleryButtons();
+      // Configurar swipe (móvil)
+      setupGallerySwipe();
+    }
+
+    function galleryGoTo(i) {
+      if (i < 0 || i >= galleryImages.length) return;
+      galleryIndex = i;
+      const track = document.getElementById('modalGalleryTrack');
+      track.style.transform = `translateX(-${i * 100}%)`;
+      document.getElementById('modalGalleryCurrent').textContent = i + 1;
+      // Miniatura activa
+      document.querySelectorAll('.modal-thumb').forEach((t, idx) => {
+        t.classList.toggle('active', idx === i);
+      });
+      // Scrollear miniatura activa a la vista
+      const activeThumb = document.querySelector(`.modal-thumb[data-idx="${i}"]`);
+      if (activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      updateGalleryButtons();
+    }
+
+    function galleryNav(dir) {
+      const newIdx = galleryIndex + dir;
+      // Loop infinito: si pasa del final vuelve al principio y viceversa
+      if (newIdx < 0) galleryGoTo(galleryImages.length - 1);
+      else if (newIdx >= galleryImages.length) galleryGoTo(0);
+      else galleryGoTo(newIdx);
+    }
+
+    function updateGalleryButtons() {
+      // Las dejamos siempre visibles (loop infinito) salvo si hay 1 sola foto
+      // El comportamiento de "deshabilitar en los extremos" se podría activar quitando el loop
+    }
+
+    // Swipe en móvil
+    let swipeStartX = null;
+    function setupGallerySwipe() {
+      const track = document.getElementById('modalGalleryTrack');
+      if (!track) return;
+      track.ontouchstart = (e) => { swipeStartX = e.touches[0].clientX; };
+      track.ontouchend = (e) => {
+        if (swipeStartX === null) return;
+        const dx = e.changedTouches[0].clientX - swipeStartX;
+        if (Math.abs(dx) > 50) galleryNav(dx < 0 ? 1 : -1);
+        swipeStartX = null;
+      };
+    }
+
+    // Teclado: ← → para navegar cuando hay un modal o lightbox abierto
+    document.addEventListener('keydown', (e) => {
+      const modalOpen = document.getElementById('modalBackdrop').classList.contains('active');
+      const lightboxOpen = document.getElementById('lightbox').classList.contains('active');
+      if (lightboxOpen) {
+        if (e.key === 'ArrowLeft') lightboxNav(-1);
+        else if (e.key === 'ArrowRight') lightboxNav(1);
+        else if (e.key === 'Escape') closeLightbox();
+      } else if (modalOpen) {
+        if (e.key === 'ArrowLeft') galleryNav(-1);
+        else if (e.key === 'ArrowRight') galleryNav(1);
+      }
+    });
+
+    // ════════════════════════════════════════
+    // LIGHTBOX (vista pantalla completa)
+    // ════════════════════════════════════════
+    let lightboxIndex = 0;
+
+    function openLightbox(i) {
+      if (galleryImages.length === 0) return;
+      lightboxIndex = i;
+      document.getElementById('lightboxImg').src = galleryImages[i];
+      document.getElementById('lightboxCurrent').textContent = i + 1;
+      document.getElementById('lightboxTotal').textContent = galleryImages.length;
+      document.getElementById('lightbox').classList.add('active');
+      // Si hay 1 sola foto, ocultar flechas y contador
+      const single = galleryImages.length === 1;
+      document.querySelectorAll('.lightbox-arrow').forEach(b => b.style.display = single ? 'none' : 'flex');
+      document.querySelector('.lightbox-counter').style.display = single ? 'none' : 'block';
+    }
+
+    function lightboxNav(dir) {
+      const n = galleryImages.length;
+      lightboxIndex = (lightboxIndex + dir + n) % n;
+      document.getElementById('lightboxImg').src = galleryImages[lightboxIndex];
+      document.getElementById('lightboxCurrent').textContent = lightboxIndex + 1;
+      // Sincronizar con el carrusel del modal
+      galleryGoTo(lightboxIndex);
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+
+    // Click en el fondo del lightbox para cerrar
+    document.getElementById('lightbox').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('lightbox')) closeLightbox();
+    });
 
     function closeModal() {
       document.getElementById('modalBackdrop').classList.remove('active');
@@ -6754,21 +7114,49 @@
     function submitForm(e) {
       e.preventDefault();
       if (!validateStep(6)) return false;
-      // Simulación (en producción aquí va el POST al backend / Formspree / Resend)
+
       const submitBtn = document.getElementById('formBtnSubmit');
+      const form = document.getElementById('formVender');
+      const success = document.getElementById('formSuccess');
+
       submitBtn.disabled = true;
       submitBtn.innerHTML = 'Enviando... <span class="arrow">→</span>';
 
-      console.log('Datos enviados:', formData);
+      // Construir un payload legible para el email de Formspree
+      // (Formspree muestra el JSON tal cual en el email, así que estructuramos los datos)
+      const payload = {
+        _subject: `Nueva valoración Solenne — ${formData.nombre || ''} ${formData.apellidos || ''}`.trim(),
+        ...formData,
+        extras: formData.extras.join(', ')  // los arrays se ven mejor como string
+      };
 
-      setTimeout(() => {
-        const form = document.getElementById('formVender');
-        const success = document.getElementById('formSuccess');
-        // Ocultar todo el formulario excepto el mensaje
-        form.querySelectorAll('.form-step, .form-progress, .form-nav').forEach(el => el.style.display = 'none');
-        success.classList.add('visible');
-        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 800);
+      fetch('https://formspree.io/f/mlgvddwo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(response => {
+        if (response.ok) {
+          // Éxito: ocultar formulario y mostrar mensaje de confirmación
+          form.querySelectorAll('.form-step, .form-progress, .form-nav').forEach(el => el.style.display = 'none');
+          success.classList.add('visible');
+          success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          // Formspree respondió pero con error (cuota mensual agotada, etc.)
+          throw new Error('respuesta no OK');
+        }
+      })
+      .catch(err => {
+        // Error de red o de Formspree: restaurar botón y mostrar aviso
+        console.error('Error al enviar el formulario:', err);
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Reintentar envío <span class="arrow">→</span>';
+        alert('Ha habido un problema al enviar el formulario. Por favor, inténtalo de nuevo en unos segundos o contáctanos directamente por WhatsApp.');
+      });
+
       return false;
     }
 
@@ -6788,10 +7176,199 @@
       });
     });
 
-    // INIT
-    renderProperties();
-    renderListing();
-    renderPromos();
+    // ════════════════════════════════════════
+    // CONEXIÓN A SHEETY · Carga de propiedades
+    // ════════════════════════════════════════
+    const SHEETY_URL = 'https://api.sheety.co/23857ba3b6715eb20de70a3342034254/solennePropiedades/hoja1';
+    const SHEETY_CACHE_KEY = 'solenne_properties_cache';
+    const SHEETY_CACHE_TIMESTAMP = 'solenne_properties_cache_ts';
+    const SHEETY_CACHE_DURATION_MS = 60 * 60 * 1000; // 1 hora
+
+    /**
+     * Transforma una fila de Sheety al formato interno de PROPERTIES.
+     * Sheety devuelve strings para todo, hay que convertir tipos.
+     */
+    function transformSheetyRow(row) {
+      // Helper: convertir string "TRUE"/"FALSE"/booleano a booleano JS
+      const toBool = (v) => {
+        if (typeof v === 'boolean') return v;
+        if (typeof v === 'string') return v.toUpperCase() === 'TRUE' || v === '1' || v.toLowerCase() === 'sí';
+        return Boolean(v);
+      };
+      // Helper: split por |  trim de cada item
+      const toArray = (v) => {
+        if (!v) return [];
+        if (Array.isArray(v)) return v;
+        return String(v).split('|').map(s => s.trim()).filter(s => s.length > 0);
+      };
+      // Helper: número (string a int o float)
+      const toNum = (v) => {
+        if (v === null || v === undefined || v === '') return null;
+        const n = Number(v);
+        return isNaN(n) ? null : n;
+      };
+
+      const gallery = toArray(row.gallery);
+      // Si no hay gallery, usar img como única imagen
+      const finalGallery = gallery.length > 0 ? gallery : (row.img ? [row.img] : []);
+
+      return {
+        id: toNum(row.id),
+        zone: String(row.zone || '').trim().toLowerCase(),
+        sub: String(row.sub || '').trim().toLowerCase(),
+        titulo: String(row.titulo || '').trim(),
+        tipo: String(row.tipo || '').trim(),
+        precio: toNum(row.precio) || 0,
+        m2: toNum(row.m2) || 0,
+        dorm: toNum(row.dorm) || 0,
+        banios: toNum(row.banios) || 0,
+        ubicacion: String(row.ubicacion || '').trim(),
+        piscina: toBool(row.piscina),
+        mar: toBool(row.mar),
+        obra: toBool(row.obra),
+        descripcion: String(row.descripcion || '').trim(),
+        extras: toArray(row.extras),
+        img: String(row.img || '').trim(),
+        gallery: finalGallery,
+        lat: toNum(row.lat),
+        lng: toNum(row.lng),
+        mapMode: row.mapMode ? String(row.mapMode).trim().toLowerCase() : null
+      };
+    }
+
+    /**
+     * Carga propiedades desde caché si está fresca (<1h), o desde Sheety si no.
+     */
+    async function loadProperties() {
+      // 1. Intentar usar caché
+      try {
+        const cached = localStorage.getItem(SHEETY_CACHE_KEY);
+        const cachedTs = parseInt(localStorage.getItem(SHEETY_CACHE_TIMESTAMP) || '0', 10);
+        const age = Date.now() - cachedTs;
+        if (cached && age < SHEETY_CACHE_DURATION_MS) {
+          const data = JSON.parse(cached);
+          if (Array.isArray(data) && data.length > 0) {
+            console.log(`✓ Propiedades cargadas desde caché (${data.length}, edad: ${Math.round(age/1000/60)}min)`);
+            return data;
+          }
+        }
+      } catch (e) {
+        console.warn('No se pudo leer caché:', e);
+      }
+
+      // 2. Pedir a Sheety
+      try {
+        console.log('→ Pidiendo propiedades a Sheety...');
+        const res = await fetch(SHEETY_URL);
+        if (!res.ok) throw new Error(`Sheety devolvió HTTP ${res.status}`);
+        const json = await res.json();
+        // Sheety envuelve los datos en una key con el nombre de la hoja (hoja1)
+        const rows = json.hoja1 || json.sheet1 || Object.values(json)[0] || [];
+        if (!Array.isArray(rows)) throw new Error('Respuesta de Sheety inesperada');
+
+        const transformed = rows
+          .map(transformSheetyRow)
+          .filter(p => p.id && p.zone && p.titulo); // descartar filas vacías
+
+        // Guardar en caché
+        try {
+          localStorage.setItem(SHEETY_CACHE_KEY, JSON.stringify(transformed));
+          localStorage.setItem(SHEETY_CACHE_TIMESTAMP, Date.now().toString());
+        } catch (e) {
+          console.warn('No se pudo guardar caché:', e);
+        }
+
+        console.log(`✓ ${transformed.length} propiedades cargadas desde Sheety`);
+        return transformed;
+      } catch (e) {
+        console.error('✗ Error cargando desde Sheety:', e);
+        return null; // null = fallo
+      }
+    }
+
+    /**
+     * Actualiza los contadores del mapa de Comprar según los datos cargados.
+     */
+    function updateMapZoneCounts() {
+      const counts = {};
+      const minPrices = {};
+      PROPERTIES.forEach(p => {
+        counts[p.zone] = (counts[p.zone] || 0) + 1;
+        if (!minPrices[p.zone] || p.precio < minPrices[p.zone]) minPrices[p.zone] = p.precio;
+      });
+      // Actualizar los <text class="zone-count"> en el SVG
+      document.querySelectorAll('.zone-region').forEach(region => {
+        const zoneKey = region.dataset.zone;
+        const count = counts[zoneKey] || 0;
+        const textEl = region.querySelector('.zone-count');
+        if (textEl) {
+          textEl.textContent = count === 0 ? 'Próximamente' : (count === 1 ? '1 propiedad' : `${count} propiedades`);
+        }
+      });
+    }
+
+    /**
+     * Muestra estado de carga / error en el panel y listado.
+     */
+    function showLoadingState() {
+      const container = document.getElementById('propertiesContainer');
+      const listingGrid = document.getElementById('listingGrid');
+      const html = `
+        <div class="panel-empty">
+          <div class="panel-empty-icon" style="animation: pulseDot 1.4s ease-in-out infinite;">·</div>
+          <div class="panel-empty-title">Cargando propiedades...</div>
+          <div class="panel-empty-text">Un momento, estamos preparando la cartera.</div>
+        </div>
+      `;
+      if (container) container.innerHTML = html;
+      if (listingGrid) listingGrid.innerHTML = `<div style="grid-column: 1 / -1;">${html}</div>`;
+    }
+
+    function showErrorState() {
+      const container = document.getElementById('propertiesContainer');
+      const listingGrid = document.getElementById('listingGrid');
+      const pagEl = document.getElementById('pagination');
+      const resultCount = document.getElementById('resultCount');
+      const html = `
+        <div class="panel-empty">
+          <div class="panel-empty-icon">∅</div>
+          <div class="panel-empty-title">No hay propiedades disponibles</div>
+          <div class="panel-empty-text">En este momento no podemos mostrar la cartera. Por favor, inténtalo de nuevo en unos minutos o contáctanos directamente para que te asesoremos personalmente.</div>
+        </div>
+      `;
+      if (container) container.innerHTML = html;
+      if (listingGrid) listingGrid.innerHTML = `<div style="grid-column: 1 / -1;">${html}</div>`;
+      if (pagEl) pagEl.innerHTML = '';
+      if (resultCount) resultCount.textContent = '0';
+    }
+
+    // ════════════════════════════════════════
+    // INIT · Arranque de la aplicación
+    // ════════════════════════════════════════
+    async function init() {
+      // 1. Renderizar lo que no depende de propiedades (promociones, etc.)
+      renderPromos();
+
+      // 2. Mostrar estado de carga mientras pedimos a Sheety
+      showLoadingState();
+
+      // 3. Cargar propiedades
+      const data = await loadProperties();
+
+      if (data === null || data.length === 0) {
+        // Fallo: Sheety caído, cuota agotada o hoja vacía
+        showErrorState();
+        return;
+      }
+
+      // 4. Aplicar datos y renderizar
+      PROPERTIES = data;
+      updateMapZoneCounts();
+      renderProperties();
+      renderListing();
+    }
+
+    init();
   </script>
 
 </body>
