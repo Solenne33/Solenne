@@ -244,21 +244,9 @@
       transform: translate(2px, 2px);
     }
 
-    /* Montañas estilizadas */
-    .hero-map-mountain {
-      fill: rgba(140, 138, 79, 0.15);
-      stroke: rgba(140, 138, 79, 0.35);
-      stroke-width: 0.5;
-      stroke-linejoin: round;
-    }
 
-    /* Rosa de los vientos */
-    .compass-rose {
-      transform-origin: center;
-      animation: compassRotate 60s linear infinite;
-    }
-    @keyframes compassRotate {
-      from { transform: rotate(0deg); }
+
+
       to { transform: rotate(360deg); }
     }
 
@@ -295,18 +283,22 @@
     }
     .map-pin-label {
       font-family: 'Manrope', sans-serif;
-      font-size: 8px;
+      font-size: 9px;
       font-weight: 600;
       fill: var(--ink);
-      opacity: 0;
-      transform: translateY(-3px);
+      opacity: 0.82;
       transition: all 0.3s;
       pointer-events: none;
       letter-spacing: 0.04em;
+      paint-order: stroke;
+      stroke: rgba(247, 242, 234, 0.85);
+      stroke-width: 2.5px;
+      stroke-linejoin: round;
     }
     .map-pin:hover .map-pin-label {
       opacity: 1;
-      transform: translateY(0);
+      fill: var(--sea);
+      font-weight: 700;
     }
 
     /* Pin destacado (con pulse permanente) */
@@ -322,20 +314,7 @@
       50% { transform: scale(1.2); }
     }
 
-    /* Sol decorativo (en el mar, evoca el logo) */
-    .map-sun {
-      animation: floatSlow 18s ease-in-out infinite;
-    }
-    .map-sun-circle {
-      fill: var(--sun);
-      opacity: 0.85;
-    }
-    .map-sun-arc {
-      fill: none;
-      stroke: var(--clay);
-      stroke-width: 1.5;
-      stroke-linecap: round;
-    }
+
 
     /* Texto decorativo */
     .map-coast-label {
@@ -354,71 +333,8 @@
       opacity: 0.7;
     }
 
-    /* Fotos flotantes alrededor del mapa */
-    .map-photo {
-      position: absolute;
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 20px 40px -12px rgba(15, 61, 62, 0.28), 0 8px 16px -6px rgba(26, 24, 20, 0.12);
-      border: 4px solid var(--cream);
-      z-index: 5;
-      transition: transform 0.5s cubic-bezier(.2,.8,.2,1);
-      opacity: 0;
-      animation: mapPhotoIn 0.8s ease forwards;
-    }
-    .map-photo img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-    }
-    .map-photo:hover {
-      transform: scale(1.05) rotate(0deg) !important;
-      z-index: 10;
-    }
-    @keyframes mapPhotoIn {
-      from { opacity: 0; transform: translateY(20px) scale(0.92); }
-      to { opacity: 1; }
-    }
 
-    .map-photo-1 {
-      top: 4%; left: -2%;
-      width: 28%; aspect-ratio: 1;
-      transform: rotate(-5deg);
-      animation-delay: 0.5s;
-    }
-    .map-photo-2 {
-      top: -3%; right: 5%;
-      width: 24%; aspect-ratio: 4/5;
-      transform: rotate(4deg);
-      animation-delay: 0.7s;
-    }
-    .map-photo-3 {
-      bottom: 6%; right: -3%;
-      width: 30%; aspect-ratio: 5/4;
-      transform: rotate(-3deg);
-      animation-delay: 0.9s;
-    }
 
-    /* Etiqueta flotante de zona destacada */
-    .map-photo-tag {
-      position: absolute;
-      bottom: 8px; left: 8px;
-      right: 8px;
-      background: rgba(15, 61, 62, 0.9);
-      backdrop-filter: blur(8px);
-      color: var(--cream);
-      padding: 0.35rem 0.6rem;
-      border-radius: 8px;
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      display: flex; align-items: center; gap: 0.3rem;
-    }
-    .map-photo-tag::before {
-      content: '';
-      width: 5px; height: 5px;
-      background: var(--sun);
-      border-radius: 50%;
-    }
 
     /* ════ ROUTES ════ */
     .routes { padding: 7rem 5rem 6rem; position: relative; }
@@ -1807,6 +1723,32 @@
       color: var(--graphite);
       line-height: 1.5;
     }
+
+    /* Hero trust (avatares + estrellas) */
+    .hero-trust {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(26, 24, 20, 0.1);
+    }
+    .trust-avatars { display: flex; }
+    .trust-avatar {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      border: 2px solid var(--cream);
+      margin-left: -10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+    .trust-avatar:first-child { margin-left: 0; }
+    .trust-avatar.ta-1 { background: linear-gradient(135deg, #C8694A, #E8A66B); }
+    .trust-avatar.ta-2 { background: linear-gradient(135deg, #0F3D3E, #5C7C7E); }
+    .trust-avatar.ta-3 { background: linear-gradient(135deg, #8C8A4F, #C9C3B6); }
+    .trust-avatar.ta-4 { background: linear-gradient(135deg, #A8543A, #C8694A); }
+    .trust-stars { color: var(--sun); font-size: 0.95rem; letter-spacing: 0.1em; }
+    .trust-text { font-size: 0.85rem; color: var(--graphite); line-height: 1.35; margin-top: 0.1rem; }
+    .trust-text strong { color: var(--ink); font-weight: 700; }
     .calc-form {
       position: relative; z-index: 2;
       display: flex; flex-direction: column;
@@ -2009,6 +1951,60 @@
     .calc-breakdown-item .value.positive { color: var(--sea); }
     .calc-breakdown-item .value.negative { color: var(--clay-deep); }
     .calc-breakdown-item .value.neutral { color: var(--stone); }
+
+    /* ════ SECCIÓN INFORME (qué incluye) ════ */
+    .report-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      padding: 5.5rem 5rem;
+      background: var(--sea);
+      color: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+    .report-left .section-eyebrow { color: var(--sun); }
+    .report-left .section-eyebrow::before { background: var(--sun); }
+    .report-left h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      line-height: 1.12;
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+    .report-left h2 em { font-style: italic; color: var(--sun); font-weight: 400; }
+    .report-left p { color: rgba(251, 248, 241, 0.75); line-height: 1.6; font-size: 0.98rem; }
+    .report-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+    .report-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      font-size: 0.98rem;
+      line-height: 1.45;
+    }
+    .report-list li .report-check {
+      flex-shrink: 0;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: rgba(232, 166, 107, 0.18);
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+    .report-list li .report-check svg { width: 14px; height: 14px; stroke: var(--sun); fill: none; stroke-width: 2.5; }
+    .report-list li strong { color: var(--cream); font-weight: 600; display: block; margin-bottom: 0.1rem; }
+    .report-list li span { color: rgba(251, 248, 241, 0.65); font-size: 0.88rem; }
+
+    @media (max-width: 900px) {
+      .report-section { grid-template-columns: 1fr; gap: 2.5rem; padding: 3.5rem 1.5rem; }
+    }
 
     /* ════ HONORARIOS ════ */
     .honorarios {
@@ -3347,195 +3343,220 @@
       </div>
       <div class="home-hero-right">
         <div class="hero-map">
-          <!-- Fotos flotantes alrededor -->
-          <div class="map-photo map-photo-1">
-            <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&q=80" alt="Marbella">
-            <div class="map-photo-tag">Marbella</div>
-          </div>
-          <div class="map-photo map-photo-2">
-            <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&q=80" alt="Mijas">
-            <div class="map-photo-tag">Mijas Pueblo</div>
-          </div>
-          <div class="map-photo map-photo-3">
-            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt="Málaga">
-            <div class="map-photo-tag">Málaga</div>
-          </div>
-
-          <!-- Mapa SVG decorativo -->
-          <svg class="hero-map-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+          <svg class="hero-map-svg" viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="heroSeaGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#E8EFEE" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="#C2D2D0" stop-opacity="0.75"/>
+              </linearGradient>
+              <linearGradient id="heroLandGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#F4ECDE"/>
+                <stop offset="100%" stop-color="#EBE0CD"/>
+              </linearGradient>
+              <linearGradient id="heroMountainGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#D9D1BD" stop-opacity="0.55"/>
+                <stop offset="100%" stop-color="#EBE0CD" stop-opacity="0"/>
+              </linearGradient>
+              <filter id="coastShadow" x="-2%" y="-5%" width="104%" height="115%">
+                <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0F3D3E" flood-opacity="0.1"/>
+              </filter>
+            </defs>
 
             <!-- Mar de fondo -->
-            <rect class="hero-map-sea" x="0" y="0" width="600" height="600" rx="14"/>
+            <rect x="0" y="0" width="800" height="520" fill="url(#heroSeaGradient)" rx="20"/>
 
-            <!-- Batimetría: líneas de profundidad -->
-            <g class="hero-map-bathy-group">
-              <path class="hero-map-bathy" d="M40,440 Q160,420 280,425 T560,420"/>
-              <path class="hero-map-bathy" d="M40,470 Q160,452 280,455 T560,448"/>
-              <path class="hero-map-bathy" d="M40,500 Q160,485 280,488 T560,478"/>
-              <path class="hero-map-bathy" d="M40,530 Q160,518 280,520 T560,508"/>
-              <path class="hero-map-bathy" d="M40,560 Q160,550 280,552 T560,538"/>
+            <!-- Batimetría: líneas paralelas a la costa real -->
+            <g opacity="0.28" fill="none" stroke="#5C7C7E" stroke-width="0.6" stroke-dasharray="1.5 3.5">
+              <path d="M 30,420 Q 200,408 400,418 Q 600,412 770,400"/>
+              <path d="M 30,450 Q 200,438 400,445 Q 600,440 770,428"/>
+              <path d="M 30,478 Q 200,468 400,472 Q 600,466 770,454"/>
             </g>
 
-            <!-- Sombra de la tierra -->
-            <path class="hero-map-land-shadow" d="
-              M 40 340
-              Q 70 320 110 310
-              L 150 295
-              Q 200 285 250 260
-              L 290 235
-              Q 330 215 380 200
-              L 410 175
-              Q 440 165 470 175
-              L 500 195
-              Q 530 215 540 250
-              L 555 280
-              Q 560 310 555 340
-              L 555 410
-              L 40 410
-              Z
-            "/>
+            <!-- ═══════════ TIERRA · Silueta fiel a la geografía real ═══════════
+                 Trazado basado en la cartografía real de Google Maps:
+                 - Manilva al SO (~y=395, costa baja)
+                 - Estepona sube ligeramente
+                 - Marbella en saliente sureño (~y=365)
+                 - Costa sube en ángulo hacia el NE pasando por Fuengirola/Mijas
+                 - Bahía sutil en Fuengirola-Benalmádena
+                 - Saliente del puerto de Málaga (punto más al N, ~y=275)
+                 - Costa baja hacia SE en Rincón → Torre del Mar → Almería -->
+            <path
+              fill="url(#heroLandGradient)"
+              stroke="#C8694A"
+              stroke-width="1.5"
+              stroke-linejoin="round"
+              filter="url(#coastShadow)"
+              d="
+                M 0 90
+                L 0 380
+                Q 20 388 45 395
+                Q 75 398 100 392
+                Q 135 385 165 380
+                Q 195 376 220 372
+                Q 250 368 275 358
+                Q 295 350 315 345
+                Q 340 342 365 348
+                Q 388 354 410 348
+                Q 432 343 450 335
+                Q 470 327 490 318
+                Q 510 308 525 295
+                Q 540 282 555 275
+                Q 575 270 595 272
+                Q 610 275 625 285
+                Q 640 295 660 295
+                Q 685 295 705 298
+                Q 725 300 745 303
+                L 770 308
+                Q 790 311 800 312
+                L 800 90
+                Z"
+            />
 
-            <!-- Tierra principal (Costa del Sol estilizada) -->
-            <path class="hero-map-land" d="
-              M 40 340
-              Q 70 320 110 310
-              L 150 295
-              Q 200 285 250 260
-              L 290 235
-              Q 330 215 380 200
-              L 410 175
-              Q 440 165 470 175
-              L 500 195
-              Q 530 215 540 250
-              L 555 280
-              Q 560 310 555 340
-              L 555 410
-              L 40 410
-              Z
-            "/>
+            <!-- Sierras interiores (decorativas, muy sutiles) -->
+            <!-- Sierra de Mijas detrás de Fuengirola/Mijas -->
+            <path
+              fill="url(#heroMountainGradient)"
+              d="M 230 340 Q 280 305 330 318 Q 380 330 410 318 Q 360 290 310 295 Q 260 305 230 340 Z"
+              opacity="0.7"
+            />
+            <!-- Montes de Málaga detrás de la capital -->
+            <path
+              fill="url(#heroMountainGradient)"
+              d="M 470 290 Q 530 250 590 250 Q 650 252 690 270 Q 620 230 550 230 Q 490 232 470 290 Z"
+              opacity="0.7"
+            />
 
-            <!-- Montañas estilizadas (Sierras al interior) -->
-            <path class="hero-map-mountain" d="M 90 305 L 110 270 L 130 295 L 150 260 L 175 290 L 195 280 Z"/>
-            <path class="hero-map-mountain" d="M 220 265 L 245 230 L 270 255 L 295 220 L 320 245 Z"/>
-            <path class="hero-map-mountain" d="M 360 215 L 385 185 L 410 210 L 435 180 L 460 200 Z"/>
-            <path class="hero-map-mountain" d="M 480 195 L 505 215 L 525 200 L 545 230 Z"/>
+            <!-- Línea de costa marcada -->
+            <path
+              fill="none"
+              stroke="#A8543A"
+              stroke-width="0.9"
+              stroke-linejoin="round"
+              opacity="0.55"
+              d="
+                M 0 380
+                Q 20 388 45 395
+                Q 75 398 100 392
+                Q 135 385 165 380
+                Q 195 376 220 372
+                Q 250 368 275 358
+                Q 295 350 315 345
+                Q 340 342 365 348
+                Q 388 354 410 348
+                Q 432 343 450 335
+                Q 470 327 490 318
+                Q 510 308 525 295
+                Q 540 282 555 275
+                Q 575 270 595 272
+                Q 610 275 625 285
+                Q 640 295 660 295
+                Q 685 295 705 298
+                Q 725 300 745 303
+                L 770 308
+                Q 790 311 800 312"
+            />
 
-            <!-- Etiquetas geográficas -->
-            <text class="map-coast-label" x="300" y="395" text-anchor="middle">Costa del Sol</text>
-            <text class="map-sea-label" x="300" y="500" text-anchor="middle">MAR · MEDITERRÁNEO</text>
+            <!-- ═══════════ TIPOGRAFÍA ═══════════ -->
+            <text x="50" y="150" font-family="Fraunces" font-style="italic" font-size="22" fill="#0F3D3E" letter-spacing="-0.01em" opacity="0.85">Costa del Sol</text>
+            <text x="50" y="170" font-family="Manrope" font-size="8.5" fill="#8A857C" letter-spacing="0.32em" font-weight="600">MÁLAGA · ESPAÑA</text>
 
-            <!-- Sol decorativo flotante en el mar (eco del logo) -->
-            <g class="map-sun" transform="translate(110, 130)">
-              <path class="map-sun-arc" d="M -20 18 Q -20 0 0 0 Q 20 0 20 18"/>
-              <circle class="map-sun-circle" cx="0" cy="8" r="9"/>
-              <line x1="-30" y1="18" x2="30" y2="18" stroke="#0F3D3E" stroke-width="1.5" stroke-linecap="round"/>
+            <text x="450" y="470" text-anchor="middle" font-family="Fraunces" font-style="italic" font-size="14" fill="#5C7C7E" letter-spacing="0.32em" opacity="0.55">MAR MEDITERRÁNEO</text>
+
+            <!-- Anclas geográficas -->
+            <g opacity="0.45">
+              <text x="20" y="430" font-family="Manrope" font-size="7.5" fill="#8A857C" letter-spacing="0.18em" font-weight="600">← GIBRALTAR</text>
+            </g>
+            <g opacity="0.45">
+              <text x="785" y="345" text-anchor="end" font-family="Manrope" font-size="7.5" fill="#8A857C" letter-spacing="0.18em" font-weight="600">ALMERÍA →</text>
             </g>
 
-            <!-- Pequeños veleros decorativos -->
-            <g opacity="0.5">
-              <g transform="translate(420, 470)">
-                <path d="M -8 0 L 8 0 L 5 6 L -5 6 Z" fill="#0F3D3E"/>
-                <line x1="0" y1="0" x2="0" y2="-12" stroke="#0F3D3E" stroke-width="0.8"/>
-                <path d="M 0 -12 L 0 -2 L 7 -2 Z" fill="#0F3D3E"/>
-              </g>
-              <g transform="translate(180, 510)">
-                <path d="M -6 0 L 6 0 L 4 4 L -4 4 Z" fill="#5C7C7E"/>
-                <line x1="0" y1="0" x2="0" y2="-9" stroke="#5C7C7E" stroke-width="0.7"/>
-                <path d="M 0 -9 L 0 -1 L 5 -1 Z" fill="#5C7C7E"/>
-              </g>
-            </g>
+            <!-- ═══════════ PINES DE LOS 10 MUNICIPIOS ═══════════
+                 Coordenadas fieles a la geografía real (referencia Google Maps) -->
 
-            <!-- Rosa de los vientos -->
-            <g transform="translate(530, 70)">
-              <circle r="22" fill="none" stroke="#5C7C7E" stroke-width="0.6" opacity="0.4"/>
-              <g class="compass-rose">
-                <path d="M 0 -18 L 4 0 L 0 18 L -4 0 Z" fill="#0F3D3E" opacity="0.7"/>
-                <path d="M -18 0 L 0 -4 L 18 0 L 0 4 Z" fill="#C8694A" opacity="0.5"/>
-              </g>
-              <text x="0" y="-28" text-anchor="middle" font-family="Fraunces" font-style="italic" font-size="9" fill="#5C7C7E">N</text>
-            </g>
-
-            <!-- ════════ PINES DE LOS 10 MUNICIPIOS ════════ -->
-            <!-- Posiciones cuidadas para que sigan la línea de costa estilizada -->
-
-            <!-- 1. Manilva (oeste) -->
+            <!-- 1. MANILVA (extremo SO, costa baja) -->
             <g class="map-pin" data-name="Manilva">
-              <circle class="map-pin-ring" cx="75" cy="350" r="4"/>
-              <circle class="map-pin-dot" cx="75" cy="350" r="3.5"/>
-              <text class="map-pin-label" x="75" y="343" text-anchor="middle">Manilva</text>
+              <circle class="map-pin-ring" cx="65" cy="395" r="4"/>
+              <circle class="map-pin-dot" cx="65" cy="395" r="3.5"/>
+              <text class="map-pin-label" x="65" y="386" text-anchor="middle">Manilva</text>
             </g>
 
-            <!-- 2. Estepona -->
+            <!-- 2. ESTEPONA -->
             <g class="map-pin" data-name="Estepona">
-              <circle class="map-pin-ring" cx="130" cy="330" r="4"/>
-              <circle class="map-pin-dot" cx="130" cy="330" r="3.5"/>
-              <text class="map-pin-label" x="130" y="323" text-anchor="middle">Estepona</text>
+              <circle class="map-pin-ring" cx="135" cy="385" r="4"/>
+              <circle class="map-pin-dot" cx="135" cy="385" r="3.5"/>
+              <text class="map-pin-label" x="135" y="376" text-anchor="middle">Estepona</text>
             </g>
 
-            <!-- 3. Marbella (DESTACADA) -->
+            <!-- 3. MARBELLA (DESTACADA, saliente sureño) -->
             <g class="map-pin featured" data-name="Marbella">
-              <circle class="map-pin-ring" cx="200" cy="298" r="4.5"/>
-              <circle class="map-pin-dot" cx="200" cy="298" r="4"/>
-              <text class="map-pin-label" x="200" y="290" text-anchor="middle" style="opacity:1; font-weight:700;">Marbella</text>
+              <circle class="map-pin-ring" cx="240" cy="372" r="4.5"/>
+              <circle class="map-pin-dot" cx="240" cy="372" r="4"/>
+              <text class="map-pin-label" x="240" y="362" text-anchor="middle" style="opacity:1; font-weight:700; font-size:9.5px;">Marbella</text>
             </g>
 
-            <!-- 4. Mijas -->
+            <!-- 4. MIJAS (INTERIOR, no en costa) - importante!: detrás de Fuengirola -->
             <g class="map-pin" data-name="Mijas">
-              <circle class="map-pin-ring" cx="270" cy="278" r="4"/>
-              <circle class="map-pin-dot" cx="270" cy="278" r="3.5"/>
-              <text class="map-pin-label" x="270" y="270" text-anchor="middle">Mijas</text>
+              <circle class="map-pin-ring" cx="320" cy="328" r="4"/>
+              <circle class="map-pin-dot" cx="320" cy="328" r="3.5"/>
+              <text class="map-pin-label" x="320" y="319" text-anchor="middle">Mijas</text>
             </g>
 
-            <!-- 5. Fuengirola -->
+            <!-- 5. FUENGIROLA (costa, debajo de Mijas) -->
             <g class="map-pin" data-name="Fuengirola">
-              <circle class="map-pin-ring" cx="320" cy="270" r="4"/>
-              <circle class="map-pin-dot" cx="320" cy="270" r="3.5"/>
-              <text class="map-pin-label" x="320" y="262" text-anchor="middle">Fuengirola</text>
+              <circle class="map-pin-ring" cx="355" cy="358" r="4"/>
+              <circle class="map-pin-dot" cx="355" cy="358" r="3.5"/>
+              <text class="map-pin-label" x="355" y="375" text-anchor="middle">Fuengirola</text>
             </g>
 
-            <!-- 6. Benalmádena -->
+            <!-- 6. BENALMÁDENA -->
             <g class="map-pin" data-name="Benalmádena">
-              <circle class="map-pin-ring" cx="370" cy="245" r="4"/>
-              <circle class="map-pin-dot" cx="370" cy="245" r="3.5"/>
-              <text class="map-pin-label" x="370" y="237" text-anchor="middle">Benalmádena</text>
+              <circle class="map-pin-ring" cx="415" cy="342" r="4"/>
+              <circle class="map-pin-dot" cx="415" cy="342" r="3.5"/>
+              <text class="map-pin-label" x="415" y="359" text-anchor="middle">Benalmádena</text>
             </g>
 
-            <!-- 7. Torremolinos -->
+            <!-- 7. TORREMOLINOS (muy cerca de Benalmádena) -->
             <g class="map-pin" data-name="Torremolinos">
-              <circle class="map-pin-ring" cx="415" cy="225" r="4"/>
-              <circle class="map-pin-dot" cx="415" cy="225" r="3.5"/>
-              <text class="map-pin-label" x="415" y="217" text-anchor="middle">Torremolinos</text>
+              <circle class="map-pin-ring" cx="465" cy="328" r="4"/>
+              <circle class="map-pin-dot" cx="465" cy="328" r="3.5"/>
+              <text class="map-pin-label" x="468" y="319" text-anchor="middle">Torremolinos</text>
             </g>
 
-            <!-- 8. Málaga capital (DESTACADA) -->
+            <!-- 8. MÁLAGA capital (DESTACADA, saliente del puerto, punto más al N) -->
             <g class="map-pin featured" data-name="Málaga">
-              <circle class="map-pin-ring" cx="455" cy="208" r="4.5"/>
-              <circle class="map-pin-dot" cx="455" cy="208" r="4"/>
-              <text class="map-pin-label" x="455" y="200" text-anchor="middle" style="opacity:1; font-weight:700;">Málaga</text>
+              <circle class="map-pin-ring" cx="560" cy="276" r="4.5"/>
+              <circle class="map-pin-dot" cx="560" cy="276" r="4"/>
+              <text class="map-pin-label" x="560" y="266" text-anchor="middle" style="opacity:1; font-weight:700; font-size:9.5px;">Málaga</text>
             </g>
 
-            <!-- 9. Rincón de la Victoria -->
+            <!-- 9. RINCÓN DE LA VICTORIA (después de Málaga, costa baja hacia SE) -->
             <g class="map-pin" data-name="Rincón">
-              <circle class="map-pin-ring" cx="495" cy="218" r="4"/>
-              <circle class="map-pin-dot" cx="495" cy="218" r="3.5"/>
-              <text class="map-pin-label" x="495" y="210" text-anchor="middle">Rincón</text>
+              <circle class="map-pin-ring" cx="635" cy="290" r="4"/>
+              <circle class="map-pin-dot" cx="635" cy="290" r="3.5"/>
+              <text class="map-pin-label" x="635" y="308" text-anchor="middle">Rincón de la Victoria</text>
             </g>
 
-            <!-- 10. Vélez-Málaga -->
-            <g class="map-pin" data-name="Vélez">
-              <circle class="map-pin-ring" cx="535" cy="225" r="4"/>
-              <circle class="map-pin-dot" cx="535" cy="225" r="3.5"/>
-              <text class="map-pin-label" x="535" y="217" text-anchor="middle">Vélez-Málaga</text>
+            <!-- 10. VÉLEZ-MÁLAGA (extremo E, Torre del Mar) -->
+            <g class="map-pin" data-name="Vélez-Málaga">
+              <circle class="map-pin-ring" cx="730" cy="300" r="4"/>
+              <circle class="map-pin-dot" cx="730" cy="300" r="3.5"/>
+              <text class="map-pin-label" x="730" y="291" text-anchor="middle">Vélez-Málaga</text>
             </g>
 
-            <!-- Línea conectora sutil entre municipios principales -->
-            <path d="M 75 350 Q 200 310 320 270 T 535 225" fill="none" stroke="#C8694A" stroke-width="0.8" stroke-dasharray="2 3" opacity="0.4"/>
+            <!-- Línea conectora sutil siguiendo la costa real -->
+            <path d="M 65 395 Q 100 392 135 385 Q 195 378 240 372 Q 280 358 320 328 Q 340 343 355 358 Q 385 350 415 342 Q 445 335 465 328 Q 510 305 560 276 Q 600 282 635 290 Q 685 295 730 300"
+                  fill="none"
+                  stroke="#C8694A"
+                  stroke-width="0.7"
+                  stroke-dasharray="2 3"
+                  opacity="0.3"/>
 
-            <!-- Indicador inferior: "10 municipios · 1 equipo" -->
-            <g transform="translate(300, 565)">
-              <rect x="-85" y="-14" width="170" height="28" rx="14" fill="#FBF8F1" stroke="rgba(26,24,20,0.08)" stroke-width="0.8"/>
-              <circle cx="-68" cy="0" r="3" fill="#C8694A"/>
-              <text x="-58" y="3.5" font-family="Manrope" font-size="9" font-weight="600" fill="#1A1814" letter-spacing="0.05em">10 MUNICIPIOS · 1 EQUIPO</text>
+            <!-- Pill inferior -->
+            <g transform="translate(400, 498)">
+              <rect x="-92" y="-13" width="184" height="26" rx="13" fill="#FBF8F1" stroke="rgba(26,24,20,0.1)" stroke-width="0.8"/>
+              <circle cx="-74" cy="0" r="3" fill="#C8694A"/>
+              <text x="-64" y="3.5" font-family="Manrope" font-size="9" font-weight="600" fill="#1A1814" letter-spacing="0.08em">10 MUNICIPIOS · 1 EQUIPO</text>
             </g>
 
           </svg>
@@ -4040,6 +4061,18 @@
           <a href="#form-vender" class="btn-primary">Hablar con un asesor<span class="btn-arrow">→</span></a>
           <a href="https://wa.me/34600000000?text=Hola%20Solenne%2C%20quiero%20vender%20mi%20propiedad" target="_blank" rel="noopener" class="btn-ghost">WhatsApp directo<span class="btn-arrow">→</span></a>
         </div>
+        <div class="hero-trust">
+          <div class="trust-avatars">
+            <div class="trust-avatar ta-1"></div>
+            <div class="trust-avatar ta-2"></div>
+            <div class="trust-avatar ta-3"></div>
+            <div class="trust-avatar ta-4"></div>
+          </div>
+          <div>
+            <div class="trust-stars">★ ★ ★ ★ ★</div>
+            <div class="trust-text"><strong>+1.200 propietarios</strong> ya conocen el valor real de su propiedad</div>
+          </div>
+        </div>
       </div>
 
       <div class="vender-hero-right">
@@ -4190,6 +4223,39 @@
         </div>
       </div>
     </div>
+
+    <!-- QUÉ INCLUYE EL INFORME -->
+    <section class="report-section">
+      <div class="report-left">
+        <div class="section-eyebrow">El informe</div>
+        <h2>Todo lo que necesitas para tomar <em>la mejor decisión</em></h2>
+        <p>No es solo un número. Es un análisis completo de tu propiedad y de tu mercado, para que sepas exactamente dónde estás antes de decidir nada.</p>
+      </div>
+      <div class="report-right">
+        <ul class="report-list">
+          <li>
+            <span class="report-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <div><strong>Rango de valor de mercado</strong><span>El precio realista al que se vende hoy tu propiedad, no una cifra inflada.</span></div>
+          </li>
+          <li>
+            <span class="report-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <div><strong>Precio por m² de tu zona concreta</strong><span>Comparado con tu urbanización o barrio, no con el municipio entero.</span></div>
+          </li>
+          <li>
+            <span class="report-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <div><strong>Desglose de los factores</strong><span>Qué suma y qué resta valor a tu propiedad, explicado con claridad.</span></div>
+          </li>
+          <li>
+            <span class="report-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <div><strong>Tendencia del mercado</strong><span>Si tu zona sube, se mantiene o se enfría, y qué significa para ti.</span></div>
+          </li>
+          <li>
+            <span class="report-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <div><strong>Sin compromiso</strong><span>Recibes el informe y decides tú. Cero presión, cero llamadas insistentes.</span></div>
+          </li>
+        </ul>
+      </div>
+    </section>
 
     <!-- HONORARIOS -->
     <section class="honorarios">
@@ -5130,9 +5196,81 @@
     <!-- FAQ -->
     <section class="faq-section">
       <div class="faq-header">
-        <div class="section-eyebrow">Preguntas frecuentes</div>
-        <h2 class="section-title">Lo que la mayoría<br>de vendedores <em>se pregunta</em>.</h2>
-        <p class="section-lead">Si tu duda no está aquí, escríbenos. Respondemos todas.</p>
+        <div class="section-eyebrow">Antes de que preguntes</div>
+        <h2 class="section-title">Lo que todo el mundo<br>quiere saber <em>(y nadie cuenta)</em>.</h2>
+        <p class="section-lead">Sin rodeos ni letra pequeña. Si tu duda no está aquí, escríbenos a <a href="mailto:hola@solenne.es" style="color: var(--clay); font-weight: 600;">hola@solenne.es</a> y te respondemos en menos de 24h.</p>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>¿Es de verdad gratis? ¿Dónde está el truco?</span>
+            <span class="faq-toggle"></span>
+          </button>
+          <div class="faq-answer">
+            <p>Es 100% gratis y no hay truco. Te damos la valoración porque queremos que nos conozcas. Si algún día decides vender, esperamos que te acuerdes de nosotros. Y si no, te quedas con tu informe y tan amigos. <strong>Cero coste, cero compromiso, cero letra pequeña.</strong></p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>¿Me vais a freír a llamadas?</span>
+            <span class="faq-toggle"></span>
+          </button>
+          <div class="faq-answer">
+            <p>No. Lo odiamos tanto como tú. Te mandamos la valoración y, como mucho, un único mensaje por si quieres que la afinemos con una visita. <strong>Si no respondes, no insistimos.</strong> El siguiente paso siempre lo das tú.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>¿Cómo de fiable es la cifra que me dais?</span>
+            <span class="faq-toggle"></span>
+          </button>
+          <div class="faq-answer">
+            <p>Nuestra estimación se basa en precios reales de venta de tu zona concreta —no del municipio entero, sino de tu urbanización o barrio— cruzados con las características que nos cuentas. En la Costa del Sol, donde hay mucho movimiento, esto nos da una <strong>horquilla muy ajustada</strong>.</p>
+            <p>Dicho esto, somos honestos: ninguna valoración online es exacta al 100%. Para clavar el precio hace falta una visita (que también es gratis). Pero como punto de partida, vas a tener una idea muy realista.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>¿Necesito escrituras, fotos o papeles raros?</span>
+            <span class="faq-toggle"></span>
+          </button>
+          <div class="faq-answer">
+            <p>Nada de eso. Solo los datos básicos: dónde está, cuántos metros, habitaciones y en qué estado. <strong>Sin DNI, sin escrituras, sin subir fotos.</strong> Dos minutos y listo.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>¿Qué hacéis con mis datos?</span>
+            <span class="faq-toggle"></span>
+          </button>
+          <div class="faq-answer">
+            <p>Cumplimos el RGPD a rajatabla. Tus datos se usan solo para enviarte la valoración y, si tú lo pides, para llamarte. <strong>Nunca los vendemos ni los cedemos a terceros.</strong> Jamás. Y puedes pedir que los borremos cuando quieras.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>No tengo claro si quiero vender todavía...</span>
+            <span class="faq-toggle"></span>
+          </button>
+          <div class="faq-answer">
+            <p>Perfecto, no hace falta. Mucha gente nos pide la valoración solo por curiosidad, para saber cómo está su patrimonio, para una herencia, un divorcio, o para decidir con calma. <strong>Saber lo que vale tu casa no te obliga a nada.</strong> Es información, y la información es poder.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ VENTA (para quien ya quiere vender) -->
+    <section class="faq-section" style="padding-top: 0;">
+      <div class="faq-header">
+        <div class="section-eyebrow">Si ya estás pensando en vender</div>
+        <h2 class="section-title">Las dudas <em>de verdad</em><br>importantes.</h2>
+        <p class="section-lead">Lo que necesitas saber antes de poner tu casa en el mercado.</p>
       </div>
 
       <div class="faq-list">
@@ -5166,17 +5304,6 @@
           <div class="faq-answer">
             <p>El plazo medio en la Costa del Sol está entre 4 y 8 meses, dependiendo de zona, precio y tipo de propiedad. Nuestra media interna está en <strong>54 días</strong> desde que publicamos hasta que firmamos arras.</p>
             <p>La clave para acelerar: precio correcto desde el día 1 (no "probar" con un precio alto), buen reportaje y disponibilidad para visitas en horarios flexibles.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question">
-            <span>¿Qué documentos necesito para empezar?</span>
-            <span class="faq-toggle"></span>
-          </button>
-          <div class="faq-answer">
-            <p>Para arrancar nos basta con tu DNI/NIE y la <strong>nota simple</strong> del Registro (la sacamos nosotros si no la tienes). Para la venta necesitarás también: certificado energético, cédula de habitabilidad (donde aplique), recibos del IBI y de la comunidad, ITE en edificios antiguos, y certificado de estar al corriente de pagos.</p>
-            <p>Si algo de eso te falta o caduca, lo gestionamos nosotros. Está incluido en los honorarios.</p>
           </div>
         </div>
 
@@ -5508,75 +5635,102 @@
     const SUBLOCALITIES = {
       manilva: [
         { key: 'sabinillas', name: 'Sabinillas' },
+        { key: 'duquesa', name: 'Puerto de la Duquesa' },
+        { key: 'casares-costa', name: 'Casares Costa' },
         { key: 'manilva-pueblo', name: 'Manilva pueblo' },
-        { key: 'casares', name: 'Casares Costa' },
-        { key: 'duquesa', name: 'La Duquesa' }
+        { key: 'princesa-kristina', name: 'Princesa Kristina' },
+        { key: 'aldea-beach', name: 'Aldea Beach' }
       ],
       estepona: [
-        { key: 'centro', name: 'Centro' },
+        { key: 'centro', name: 'Estepona Centro' },
         { key: 'casco-antiguo', name: 'Casco antiguo' },
         { key: 'nueva-milla', name: 'Nueva Milla de Oro' },
+        { key: 'el-paraiso', name: 'El Paraíso' },
         { key: 'cancelada', name: 'Cancelada' },
+        { key: 'atalaya', name: 'Atalaya' },
         { key: 'selwo', name: 'Selwo' },
-        { key: 'bahia-dorada', name: 'Bahía Dorada' }
+        { key: 'bahia-dorada', name: 'Bahía Dorada' },
+        { key: 'valle-romano', name: 'Valle Romano (golf)' },
+        { key: 'puerto', name: 'Puerto / Marina' }
       ],
       marbella: [
-        { key: 'milla-oro', name: 'Milla de Oro' },
-        { key: 'nueva-andalucia', name: 'Nueva Andalucía' },
+        { key: 'milla-oro', name: 'Milla de Oro (Nagüeles)' },
         { key: 'puerto-banus', name: 'Puerto Banús' },
-        { key: 'san-pedro', name: 'San Pedro' },
-        { key: 'elviria', name: 'Elviria' },
-        { key: 'las-chapas', name: 'Las Chapas' },
-        { key: 'centro', name: 'Marbella Centro' }
+        { key: 'nueva-andalucia', name: 'Nueva Andalucía' },
+        { key: 'las-chapas', name: 'Las Chapas – El Rosario' },
+        { key: 'los-monteros', name: 'Río Real – Los Monteros' },
+        { key: 'elviria', name: 'Elviria – Cabopino' },
+        { key: 'san-pedro', name: 'San Pedro de Alcántara' },
+        { key: 'centro', name: 'Marbella Pueblo / Centro' },
+        { key: 'nagueles', name: 'Nagüeles' },
+        { key: 'guadalmina', name: 'Guadalmina' }
       ],
       mijas: [
-        { key: 'mijas-pueblo', name: 'Mijas Pueblo' },
-        { key: 'mijas-costa', name: 'Mijas Costa' },
-        { key: 'la-cala', name: 'La Cala' },
+        { key: 'la-cala', name: 'La Cala de Mijas' },
         { key: 'calahonda', name: 'Calahonda' },
-        { key: 'riviera', name: 'Riviera del Sol' }
+        { key: 'riviera', name: 'Riviera del Sol' },
+        { key: 'mijas-costa', name: 'Mijas Costa (Las Lagunas)' },
+        { key: 'campo-mijas', name: 'Campo Mijas' },
+        { key: 'mijas-pueblo', name: 'Mijas Pueblo' },
+        { key: 'el-faro', name: 'El Faro' },
+        { key: 'la-cala-golf', name: 'La Cala Golf' }
       ],
       fuengirola: [
-        { key: 'centro', name: 'Centro' },
+        { key: 'higueron', name: 'El Higuerón / Reserva' },
         { key: 'los-boliches', name: 'Los Boliches' },
+        { key: 'centro', name: 'Centro / Paseo Marítimo' },
         { key: 'torreblanca', name: 'Torreblanca' },
-        { key: 'higueron', name: 'El Higuerón' }
+        { key: 'carvajal', name: 'Carvajal' },
+        { key: 'los-pacos', name: 'Los Pacos' }
       ],
       benalmadena: [
-        { key: 'pueblo', name: 'Benalmádena Pueblo' },
+        { key: 'higueron', name: 'El Higuerón' },
+        { key: 'puerto-marina', name: 'Puerto Marina' },
+        { key: 'torrequebrada', name: 'Torrequebrada' },
         { key: 'costa', name: 'Benalmádena Costa' },
+        { key: 'carvajal', name: 'Carvajal' },
+        { key: 'santangelo', name: 'Santangelo' },
         { key: 'arroyo', name: 'Arroyo de la Miel' },
-        { key: 'puerto-marina', name: 'Puerto Marina' }
+        { key: 'pueblo', name: 'Benalmádena Pueblo' },
+        { key: 'tomillar', name: 'El Tomillar' }
       ],
       torremolinos: [
-        { key: 'centro', name: 'Centro' },
-        { key: 'carihuela', name: 'La Carihuela' },
+        { key: 'montemar', name: 'Montemar' },
         { key: 'playamar', name: 'Playamar' },
+        { key: 'carihuela', name: 'La Carihuela' },
+        { key: 'centro', name: 'Centro / Bajondillo' },
         { key: 'alamos', name: 'Los Álamos' },
-        { key: 'pinillo', name: 'El Pinillo' }
+        { key: 'pinillo', name: 'El Pinillo' },
+        { key: 'benyamina', name: 'Benyamina' }
       ],
       malaga: [
-        { key: 'centro-historico', name: 'Centro histórico' },
-        { key: 'soho', name: 'Soho' },
         { key: 'malagueta', name: 'La Malagueta' },
+        { key: 'centro-historico', name: 'Centro Histórico' },
         { key: 'pedregalejo', name: 'Pedregalejo' },
         { key: 'limonar', name: 'El Limonar' },
+        { key: 'cerrado', name: 'Cerrado de Calderón' },
+        { key: 'soho', name: 'Soho / Ensanche' },
+        { key: 'huelin', name: 'Huelin / Carretera Cádiz' },
+        { key: 'el-palo', name: 'El Palo' },
         { key: 'teatinos', name: 'Teatinos' },
-        { key: 'cerrado', name: 'Cerrado de Calderón' }
+        { key: 'ciudad-jardin', name: 'Ciudad Jardín' },
+        { key: 'puerto-torre', name: 'Puerto de la Torre' },
+        { key: 'churriana', name: 'Churriana' }
       ],
       rincon: [
-        { key: 'centro', name: 'Rincón centro' },
-        { key: 'torre-benagalbon', name: 'Torre de Benagalbón' },
         { key: 'cala-moral', name: 'La Cala del Moral' },
-        { key: 'anoreta', name: 'Añoreta' }
+        { key: 'torre-benagalbon', name: 'Torre de Benagalbón' },
+        { key: 'anoreta', name: 'Añoreta (golf)' },
+        { key: 'centro', name: 'Rincón centro' },
+        { key: 'benagalbon', name: 'Benagalbón pueblo' }
       ],
       velez: [
-        { key: 'centro', name: 'Vélez centro' },
         { key: 'torre-del-mar', name: 'Torre del Mar' },
         { key: 'caleta', name: 'Caleta de Vélez' },
         { key: 'almayate', name: 'Almayate' },
+        { key: 'benajarafe', name: 'Benajarafe' },
         { key: 'chilches', name: 'Chilches' },
-        { key: 'axarquia', name: 'La Axarquía (interior)' }
+        { key: 'centro', name: 'Vélez centro' }
       ]
     };
 
@@ -6574,87 +6728,114 @@
     // Precios base €/m² por sublocalidad (datos reales mercado 2025-26)
     // Cada sublocalidad tiene rango [min, max] que se promedia
     const PRICES_PER_SQM = {
-      // MANILVA
-      'manilva.sabinillas':       [2100, 2900],
-      'manilva.manilva-pueblo':   [1700, 2300],
-      'manilva.casares':          [2400, 3400],
-      'manilva.duquesa':          [2600, 3600],
-      'manilva.default':          [2000, 2800],
+      // ════ MANILVA (media ~2.400) ════
+      'manilva.sabinillas':         [2100, 2900],
+      'manilva.duquesa':            [2600, 3600],
+      'manilva.casares-costa':      [2400, 3400],
+      'manilva.manilva-pueblo':     [1700, 2300],
+      'manilva.princesa-kristina':  [2300, 3100],
+      'manilva.aldea-beach':        [2400, 3200],
+      'manilva.default':            [2100, 2900],
 
-      // ESTEPONA
-      'estepona.centro':          [2800, 3800],
-      'estepona.casco-antiguo':   [2600, 3500],
-      'estepona.nueva-milla':     [4500, 6800],
-      'estepona.cancelada':       [2900, 3900],
-      'estepona.selwo':           [2700, 3600],
-      'estepona.bahia-dorada':    [3200, 4400],
-      'estepona.default':         [2900, 4000],
+      // ════ ESTEPONA (media ~4.090) ════
+      'estepona.nueva-milla':       [4500, 6800],
+      'estepona.el-paraiso':        [3800, 5500],
+      'estepona.atalaya':           [3500, 4800],
+      'estepona.puerto':            [3400, 4600],
+      'estepona.bahia-dorada':      [3200, 4400],
+      'estepona.valle-romano':      [3000, 4100],
+      'estepona.cancelada':         [2900, 3900],
+      'estepona.centro':            [3000, 4000],
+      'estepona.casco-antiguo':     [3200, 4200],
+      'estepona.selwo':             [2700, 3600],
+      'estepona.default':           [3400, 4400],
 
-      // MARBELLA
-      'marbella.milla-oro':       [7000, 12000],
-      'marbella.nueva-andalucia': [4200, 6500],
-      'marbella.puerto-banus':    [6000, 9500],
-      'marbella.san-pedro':       [3400, 4800],
-      'marbella.elviria':         [3500, 5200],
-      'marbella.las-chapas':      [3800, 5800],
-      'marbella.centro':          [3200, 4800],
-      'marbella.default':         [4000, 6000],
+      // ════ MARBELLA (media ~5.430) ════
+      'marbella.milla-oro':         [7000, 12000],
+      'marbella.puerto-banus':      [6000, 9500],
+      'marbella.nagueles':          [6500, 9000],
+      'marbella.nueva-andalucia':   [5000, 6800],
+      'marbella.guadalmina':        [4500, 6500],
+      'marbella.las-chapas':        [4800, 5900],
+      'marbella.los-monteros':      [4800, 6000],
+      'marbella.elviria':           [4000, 5200],
+      'marbella.san-pedro':         [3800, 5000],
+      'marbella.centro':            [4000, 5400],
+      'marbella.default':           [4800, 6500],
 
-      // MIJAS
-      'mijas.mijas-pueblo':       [2400, 3400],
-      'mijas.mijas-costa':        [2800, 3800],
-      'mijas.la-cala':            [3000, 4200],
-      'mijas.calahonda':          [2900, 4000],
-      'mijas.riviera':            [2700, 3700],
-      'mijas.default':            [2800, 3800],
+      // ════ MIJAS (media ~3.300) ════
+      'mijas.la-cala':              [3000, 4200],
+      'mijas.la-cala-golf':         [2900, 4000],
+      'mijas.calahonda':            [2900, 4000],
+      'mijas.el-faro':              [2900, 3900],
+      'mijas.riviera':              [2700, 3700],
+      'mijas.mijas-costa':          [2800, 3800],
+      'mijas.campo-mijas':          [2500, 3300],
+      'mijas.mijas-pueblo':         [2400, 3400],
+      'mijas.default':              [2800, 3800],
 
-      // FUENGIROLA
-      'fuengirola.centro':        [3000, 4000],
-      'fuengirola.los-boliches':  [3100, 4100],
-      'fuengirola.torreblanca':   [2700, 3500],
-      'fuengirola.higueron':      [4200, 5800],
-      'fuengirola.default':       [3000, 4000],
+      // ════ FUENGIROLA (media ~4.500) ════
+      'fuengirola.higueron':        [4200, 5800],
+      'fuengirola.los-boliches':    [3400, 4400],
+      'fuengirola.carvajal':        [3300, 4300],
+      'fuengirola.centro':          [3200, 4200],
+      'fuengirola.los-pacos':       [2900, 3800],
+      'fuengirola.torreblanca':     [2700, 3500],
+      'fuengirola.default':         [3300, 4400],
 
-      // BENALMÁDENA
-      'benalmadena.pueblo':       [2900, 3900],
-      'benalmadena.costa':        [3000, 4000],
-      'benalmadena.arroyo':       [2600, 3500],
-      'benalmadena.puerto-marina':[3400, 4600],
-      'benalmadena.default':      [2900, 3900],
+      // ════ BENALMÁDENA (media ~4.020) ════
+      'benalmadena.higueron':       [4000, 5500],
+      'benalmadena.puerto-marina':  [3400, 4600],
+      'benalmadena.torrequebrada':  [3200, 4200],
+      'benalmadena.costa':          [3000, 4000],
+      'benalmadena.carvajal':       [3000, 3900],
+      'benalmadena.santangelo':     [2700, 3400],
+      'benalmadena.pueblo':         [2900, 3900],
+      'benalmadena.tomillar':       [2700, 3500],
+      'benalmadena.arroyo':         [2600, 3500],
+      'benalmadena.default':        [3000, 4000],
 
-      // TORREMOLINOS
-      'torremolinos.centro':      [2500, 3300],
-      'torremolinos.carihuela':   [2700, 3500],
-      'torremolinos.playamar':    [2900, 3800],
-      'torremolinos.alamos':      [2400, 3200],
-      'torremolinos.pinillo':     [2200, 3000],
-      'torremolinos.default':     [2500, 3300],
+      // ════ TORREMOLINOS (media ~3.755) ════
+      'torremolinos.montemar':      [2900, 3900],
+      'torremolinos.playamar':      [2900, 3800],
+      'torremolinos.carihuela':     [2700, 3500],
+      'torremolinos.benyamina':     [2600, 3400],
+      'torremolinos.centro':        [2500, 3300],
+      'torremolinos.alamos':        [2400, 3200],
+      'torremolinos.pinillo':       [2200, 3000],
+      'torremolinos.default':       [2600, 3500],
 
-      // MÁLAGA
-      'malaga.centro-historico':  [4200, 5800],
-      'malaga.soho':              [3800, 5200],
-      'malaga.malagueta':         [4500, 6500],
-      'malaga.pedregalejo':       [3500, 4800],
-      'malaga.limonar':           [3600, 5000],
-      'malaga.teatinos':          [2600, 3500],
-      'malaga.cerrado':           [3400, 4600],
-      'malaga.default':           [3500, 4800],
+      // ════ MÁLAGA CAPITAL (media ~3.720) ════
+      'malaga.malagueta':           [4500, 6500],
+      'malaga.pedregalejo':         [4100, 5400],
+      'malaga.limonar':             [4000, 5000],
+      'malaga.centro-historico':    [4000, 5200],
+      'malaga.soho':                [3800, 5000],
+      'malaga.cerrado':             [3400, 4600],
+      'malaga.huelin':              [3500, 4200],
+      'malaga.teatinos':            [3000, 3800],
+      'malaga.el-palo':             [3100, 3800],
+      'malaga.churriana':           [2500, 3200],
+      'malaga.puerto-torre':        [2400, 3000],
+      'malaga.ciudad-jardin':       [2100, 2700],
+      'malaga.default':             [3400, 4500],
 
-      // RINCÓN
-      'rincon.centro':            [2200, 2900],
-      'rincon.torre-benagalbon':  [2300, 3000],
-      'rincon.cala-moral':        [2400, 3200],
-      'rincon.anoreta':           [2300, 3100],
-      'rincon.default':           [2200, 3000],
+      // ════ RINCÓN DE LA VICTORIA (media ~3.377) ════
+      'rincon.cala-moral':          [2400, 3200],
+      'rincon.anoreta':             [2300, 3100],
+      'rincon.torre-benagalbon':    [2300, 3000],
+      'rincon.centro':              [2200, 2900],
+      'rincon.benagalbon':          [2000, 2700],
+      'rincon.default':             [2300, 3100],
 
-      // VÉLEZ-MÁLAGA
-      'velez.centro':             [1500, 2100],
-      'velez.torre-del-mar':      [2200, 3000],
-      'velez.caleta':             [2000, 2700],
-      'velez.almayate':           [1700, 2300],
-      'velez.chilches':           [1700, 2300],
-      'velez.axarquia':           [1500, 2100],
-      'velez.default':            [1700, 2400]
+      // ════ VÉLEZ-MÁLAGA (media ~2.423) ════
+      'velez.torre-del-mar':        [2200, 3400],
+      'velez.caleta':               [2000, 2700],
+      'velez.benajarafe':           [1800, 2400],
+      'velez.almayate':             [1700, 2300],
+      'velez.chilches':             [1700, 2300],
+      'velez.centro':               [1500, 2100],
+      'velez.default':              [1900, 2700]
     };
 
     // Multiplicadores por tipo de inmueble
@@ -6774,8 +6955,8 @@
         const valor = m2 * finalPricePerSqm;
 
         // Rango ±10%
-        const low = Math.round((valor * 0.90) / 1000) * 1000;
-        const high = Math.round((valor * 1.10) / 1000) * 1000;
+        const low = Math.round((valor * 0.92) / 1000) * 1000;
+        const high = Math.round((valor * 1.08) / 1000) * 1000;
         const avgPerSqm = Math.round(finalPricePerSqm);
 
         // ════ Renderizar resultado ════
